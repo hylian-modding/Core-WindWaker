@@ -1,0 +1,39 @@
+{
+  "rootDir": "./",
+  "outDir": "build",
+  "compilerOptions": {
+    "rootDir": "./",
+    "target": "ESNEXT",
+    "module": "commonjs",
+    "sourceMap": true,
+    "outDir": "./build",
+    "strict": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@sound/*": [
+        "./build/emulator/*"
+      ],
+      "@WindWaker/*": [
+        "./src/WindWaker/*"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "mods/**/*.ts",
+    "cores/**/*.ts",
+    "bin/paker.ts",
+    "tools/**/*.ts",
+    "src/modloader/consoles/mupen/resources/test.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "API",
+    "build.ts",
+    "build"
+  ]
+}

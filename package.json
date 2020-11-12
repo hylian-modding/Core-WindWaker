@@ -1,0 +1,22 @@
+{
+  "name": "WindWaker",
+  "version": "1.0.0",
+  "description": "Wind Waker Core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hylian-modding/Core-WindWaker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hylian-modding/Core-WindWaker/issues"
+  },
+  "homepage": "https://github.com/hylian-modding/Core-WindWaker#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
