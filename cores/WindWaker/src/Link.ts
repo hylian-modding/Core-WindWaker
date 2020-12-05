@@ -14,11 +14,6 @@ export class Link extends JSONTemplate implements API.ILink {
     private rotRoll_addr: number = 0x803F6F1C; //0x2
     private rotPitch_addr: number = 0x803F6F28; //0x2
 
-
-    private sword_addr: number = 0x803C4C16; //0x1
-    private shield_addr: number = 0x803C4C17; //0x1
-    private strength_addr: number = 0x803C4C18; //0x1
-
     //ABC4FC might be anim data 
     private sound_addr: number = 0x0;
     private anim_data_addr = 0x0;
@@ -35,4 +30,19 @@ export class Link extends JSONTemplate implements API.ILink {
         super();
         this.emulator = emu;
     }
+
+    get pos(): number {
+      return this.emulator.rdramRead32(0x803E440C);
+    }
+    get rotYaw(): number {
+      return this.emulator.rdramRead32(0x803F6F1A);
+    }
+    get rotRoll(): number {
+      return this.emulator.rdramRead32(0x803F6F1C);
+    }
+    get rotPitch(): number {
+      return this.emulator.rdramRead32(0x803F6F28);
+    }
+
+
 }

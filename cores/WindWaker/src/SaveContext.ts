@@ -18,4 +18,35 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
         this.questStatus = new QuestStatus(emu);
     }
 
+    get sword(): number {
+        return this.emulator.rdramRead8(0x803C4C16);
+    }
+
+    get shield(): number {
+        return this.emulator.rdramRead8(0x803C4C17);
+    }
+
+    get strength(): number {
+        return this.emulator.rdramRead8(0x803C4C18);
+    }
+
+    get wallet(): number {
+        return this.emulator.rdramRead8(0x803C4C1A);
+    }
+
+    get max_hp(): number {
+        return this.emulator.rdramRead16(0x803C4C08);
+    }
+
+    get current_hp(): number {
+        return this.emulator.rdramRead16(0x803C4C0A);
+    }
+
+    get max_mp(): number {
+        return this.emulator.rdramRead8(0x803C4C1B);
+    }
+
+    get current_mp(): number {
+        return this.emulator.rdramRead8(0x803C4C1C);
+    }
 }

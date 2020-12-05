@@ -126,16 +126,28 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         return this.emulator.rdramReadBit8(0x803C4C9C, index);
     }
     
-    /*TODO: Make get/set for these
-    803C4CA4-803C4CAB - Number of each item in your spoils bag you have.
-    803C4CAC-803C4CB3 - Number of each item in your bait bag you have.
-    803C4CB4-803C4CBB - Number of each item in your delivery bag you have.
-    Each entry is a byte, which is the number of that spoil/bait/letter you own.
-    */
-
     get_owned_bait(index: number): boolean {
         return this.emulator.rdramReadBit8(0x803C4C9D, index)
     }
+
+    get_count_spoils(index: number): boolean {
+        let byte = Math.floor(index / 8)
+        let bit = index % 8
+        return this.emulator.rdramReadBit8(0x803C4CA4 + byte, bit);
+    }
+
+    get_count_delivery(index: number): boolean {
+        let byte = Math.floor(index / 8)
+        let bit = index % 8
+        return this.emulator.rdramReadBit8(0x803C4CAC + byte, bit);
+    }
+
+    get_count_bait(index: number): boolean {
+        let byte = Math.floor(index / 8)
+        let bit = index % 8
+        return this.emulator.rdramReadBit8(0x803C4CB4 + byte, bit);
+    }
+    
 }
 
 
