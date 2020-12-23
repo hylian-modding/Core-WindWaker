@@ -19,13 +19,13 @@ export class WindWaker implements ICore, API.IWWCore {
     eventTicks: Map<string, Function> = new Map<string, Function>();
     link!: API.ILink;
     save!: API.ISaveContext;
+    helper!: API.IWWHelper;
 
     constructor() {
     }
 
     @Preinit()
     preinit() {
-
     }
 
     @Init()

@@ -8,13 +8,11 @@ import { IModLoaderAPI, ILogger } from "modloader64_api/IModLoaderAPI";
 
 export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     private emulator: IMemory;
-    inventory: Inventory;
-    saveContext: API.ISaveContext;
+    saveContext: SaveContext;
 
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;
-        this.inventory = new Inventory(emu);
         this.saveContext = new SaveContext(emu);
     }
 
