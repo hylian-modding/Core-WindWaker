@@ -12,8 +12,8 @@ import * as API from './API/Imports';
 import * as CORE from './src/Imports';
 import { Link, SaveContext } from "./src/Imports";
 
-export class MajorasMask implements ICore, API.IWWCore {
-    header = "NZS";
+export class WindWaker implements ICore, API.IWWCore {
+    header = "GZLE";
     @ModLoaderAPIInject()
     ModLoader: IModLoaderAPI = {} as IModLoaderAPI;
     eventTicks: Map<string, Function> = new Map<string, Function>();

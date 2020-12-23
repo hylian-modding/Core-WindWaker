@@ -16,6 +16,9 @@
       "@sound/*": [
         "./build/emulator/*"
       ],
+      "@dolphin/*": [
+        "./build/dolphin/*"
+      ],
       "@WindWaker/*": [
         "./src/WindWaker/*"
       ]
@@ -28,7 +31,8 @@
     "cores/**/*.ts",
     "bin/paker.ts",
     "tools/**/*.ts",
-    "src/modloader/consoles/mupen/resources/test.js"
+    "src/modloader/consoles/mupen/resources/test.js",
+    "API/src/IAnalyticsManager.ts"
   ],
   "exclude": [
     "node_modules",
