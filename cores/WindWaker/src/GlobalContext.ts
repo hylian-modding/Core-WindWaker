@@ -12,7 +12,16 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
     }
 
     get current_scene_name(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8);
+        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8)
+    }
+    get next_scene_name(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C9D48, 0x8);
+    }
+    get next_room_number(): number {
+        return this.emulator.rdramRead8(0x803C9D52);
+    }
+    get linkPointer(): number {
+        return this.emulator.rdramRead32(0x803CA74C);
     }
 
 }

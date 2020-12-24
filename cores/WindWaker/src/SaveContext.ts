@@ -1,6 +1,7 @@
 
 import { JSONTemplate } from "modloader64_api/JSONTemplate";
 import * as API from '../API/Imports';
+import * as CORE from '../src/Imports';
 import { Inventory } from './Inventory';
 import IMemory from "modloader64_api/IMemory";
 import { QuestStatus } from "./QuestStatus";
@@ -14,29 +15,8 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;
-        this.inventory = new Inventory(emu);
-        this.questStatus = new QuestStatus(emu);
-    }
-
-    get sword(): number {
-        return this.emulator.rdramRead8(0x803C4C16);
-    }
-    set sword(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C16, flag);
-    }
-
-    get shield(): number {
-        return this.emulator.rdramRead8(0x803C4C17);
-    }
-    set shield(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C17, flag);
-    }
-
-    get strength(): number {
-        return this.emulator.rdramRead8(0x803C4C18);
-    }
-    set strength(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C18, flag);
+        this.inventory = new CORE.Inventory(emu);
+        this.questStatus = new CORE.QuestStatus(emu);
     }
 
     get max_hp(): number {

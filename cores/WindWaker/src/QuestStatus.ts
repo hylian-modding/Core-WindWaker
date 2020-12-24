@@ -5,76 +5,203 @@ import { Inventory } from './Inventory';
 import { SaveContext } from './SaveContext';
 import IMemory from "modloader64_api/IMemory";
 import { IModLoaderAPI, ILogger } from "modloader64_api/IModLoaderAPI";
+import { Flag, FlagManager } from "modloader64_api/FlagManager";
 
-export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
+export const enum ShieldBitMap {
+    HEROES = 0,
+    MIRROR = 1
+}
+export const enum SwordBitMap {
+    HerosSword = 0,
+    MasterSword = 1,
+    MasterSwordHalf = 2,
+    MasterSwordFull = 3,
+}
+
+export class QuestStatus extends JSONTemplate implements API.IQuestStatus, API.ISwords, API.IShields {
     private emulator: IMemory;
-    saveContext: SaveContext;
+    private triforceFlags: FlagManager;
+    private triforceFlagsAddr: number = 0x803C4CC6;
+    private songFlags: FlagManager;
+    private songFlagsAddr: number = 0x803C4CC5;
+    private pearlFlags: FlagManager;
+    private pearlFlagAddr: number = 0x803C4CC7;
 
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;
-        this.saveContext = new SaveContext(emu);
+        this.triforceFlags = new FlagManager(emu, this.triforceFlagsAddr);
+        this.songFlags = new FlagManager(emu, this.songFlagsAddr);
+        this.pearlFlags = new FlagManager(emu, this.pearlFlagAddr);
     }
 
     //Bitfields 
-    get_sword(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CBC, index)
+    get swordLevel(): API.Sword {
+        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
+        if (bits[SwordBitMap.HerosSword] === 1) return API.Sword.Hero;
+        else if (bits[SwordBitMap.MasterSword] === 1) return API.Sword.Master;
+        else if (bits[SwordBitMap.MasterSwordHalf] === 1) return API.Sword.MasterHalf;
+        else if (bits[SwordBitMap.MasterSwordFull] === 1) return API.Sword.MasterFull;
+        return 0;
+    }
+
+    set swordLevel(level: API.Sword) {
+        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
+        switch (level) {
+            case API.Sword.NONE:
+                bits[SwordBitMap.HerosSword] = 0;
+                bits[SwordBitMap.MasterSword] = 0;
+                bits[SwordBitMap.MasterSwordHalf] = 0;
+                bits[SwordBitMap.MasterSwordFull] = 0;
+                break;
+            case API.Sword.Hero:
+                bits[SwordBitMap.HerosSword] = 1;
+                bits[SwordBitMap.MasterSword] = 0;
+                bits[SwordBitMap.MasterSwordHalf] = 0;
+                bits[SwordBitMap.MasterSwordFull] = 0;
+                break;
+            case API.Sword.Master:
+                bits[SwordBitMap.HerosSword] = 0;
+                bits[SwordBitMap.MasterSword] = 1;
+                bits[SwordBitMap.MasterSwordHalf] = 0;
+                bits[SwordBitMap.MasterSwordFull] = 0;
+                break;
+            case API.Sword.MasterHalf:
+                bits[SwordBitMap.HerosSword] = 0;
+                bits[SwordBitMap.MasterSword] = 0;
+                bits[SwordBitMap.MasterSwordHalf] = 1;
+                bits[SwordBitMap.MasterSwordFull] = 0;
+                break;
+            case API.Sword.MasterFull:
+                bits[SwordBitMap.HerosSword] = 0;
+                bits[SwordBitMap.MasterSword] = 0;
+                bits[SwordBitMap.MasterSwordHalf] = 0;
+                bits[SwordBitMap.MasterSwordFull] = 1;
+                break;
+        }
+        this.emulator.rdramWriteBits8(0x803C4CBC, bits);
+    }
+
+    get shieldLevel(): API.Shield {
+        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
+        if (bits[ShieldBitMap.HEROES] === 1) return API.Shield.HERO;
+        else if (bits[ShieldBitMap.MIRROR] === 1) return API.Shield.MIRROR;
+        return 0;
+    }
+
+    set shieldLevel(level: API.Shield) {
+        let bits = this.emulator.rdramReadBits8(0x803C4CBD);
+        switch (level) {
+            case API.Shield.NONE:
+                bits[ShieldBitMap.HEROES] = 0;
+                bits[ShieldBitMap.MIRROR] = 0;
+                break;
+            case API.Shield.HERO:
+                bits[ShieldBitMap.HEROES] = 1;
+                bits[ShieldBitMap.MIRROR] = 0;
+                break;
+            case API.Shield.MIRROR:
+                bits[ShieldBitMap.HEROES] = 0;
+                bits[ShieldBitMap.MIRROR] = 1;
+                break;
+        }
+        this.emulator.rdramWriteBits8(0x803C4CBD, bits);
+    }
+
+    get bracelet(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CBE, 0)
+    }
+
+    set bracelet(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CBE, flag)
+    }
+
+    get pirate_charm(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CBF, 0)
+    }
+
+    set pirate_charm(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CBF, flag)
+    }
+
+    get hero_charm(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CC0, 0)
+    }
+
+    set hero_charm(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CC0, flag)
+    }
+
+    /*
+    0 - Wind's Requiem
+    1 - Ballad of Gales
+    2 - Command Melody
+    3 - Earth God's Lyric
+    4 - Wind God's Aria
+    5 - Song of Passing
+    */
+
+    get songs(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CC5, 0x1);
+    }
+    set songs(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CC5, flag);
+    }
+
+    get triforce(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CC6, 0x1);
+    }
+    set triforce(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CC6, flag);
+    }
+
+    /*    803C4CC7,1 - Bitfield of which pearls you own ("symbols").
+    0 - Nayru's Pearl
+    1 - Din's Pearl
+    2 - Farore's Pearl*/
+
+    get pearls(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CC7, 0x1);
+    }
+    set pearls(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CC7, flag);
+    }
+
+    get owned_charts(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CDC, 0xF);
+    }
+    set owned_charts(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CDC, flag);
+    }
+
+    get opened_charts(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CEC, 0xF);
+    }
+    set opened_charts(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CEC, flag);
+    }
+
+    get completed_charts(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CFC, 0xF);
+    }
+    set completed_charts(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CFC, flag);
+    }
+
+    get sectors(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4D0C, 0x30);
+    }
+    set sectors(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4D0C, flag);
+    }
+
+    get deciphered_triforce(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4D4D, 0x1);
+    }
+    set deciphered_triforce(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4D4D, flag);
     }
     
-    get_shield(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CBD, index)
-    }
-
-    get_bracelet(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CBE, index)
-    }
-
-    get_pirate_charm(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CBF, index)
-    }
-
-    get_hero_charm(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CC0, index)
-    }
-
-    get_songs(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CC5, index)
-    }
-
-    get_triforce(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CC6, index)
-    }
-
-    get_pearl(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4CC7, index)
-    }
-
-    get_owned_charts(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CDC + byte, bit);
-    }
-
-    get_opened_charts(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CEC + byte, bit);
-    }
-
-    get_completed_charts(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CFC + byte, bit);
-    }
-
-    get_sectors(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4D0C, index)
-    }
-    
-    get_deciphered_triforce(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4D4D, index);
-    }
-
     /*
     803C4CBC-803C4CC8 - Bitfield of which items you own.
     803C4CBC,1 - Bitfield of which swords you own.

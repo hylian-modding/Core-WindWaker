@@ -22,27 +22,31 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
         this.emu = memory;
     }
 
-    isLinkEnteringLoadingZone(): boolean {
-        let r = this.emu.rdramRead8(0x803C9EA2);
-        return (r) === 0x02 || (r) === 0x03;
+    isLinkControllable(): boolean {
+        let r1 = this.emu.rdramRead8(0x803C9EB8);
+        let r2 = this.emu.rdramRead8(0x803C9EA2);
+
+        return (r1) !== 0xFF || (r2) !== 0x00;
     }
 
     isTitleScreen(): boolean {
-        let r = this.emu.rdramRead8(0x803C4D64);
-        return (r) === 0x00;
+        let sceneNameNew = this.global.current_scene_name.toString().replace(/\0.*$/g, '');
+        return sceneNameNew === "sea_T" || sceneNameNew === "Name";
+    }
+
+    isSceneChange(): boolean {
+        return (this.emu.rdramRead8(0x803C9D54) === 0x1)
+    }
+
+    isLinkExists(): boolean {
+        return (this.global.linkPointer !== 0x0);
     }
 
     isSceneNameValid(): boolean {
-        return this.global.current_scene_name[0] !== 0x0;
+        return this.global.current_scene_name.toString().replace(/\0.*$/g, '') !== "";
     }
 
     isPaused(): boolean {
-        //return this.emu.rdramRead32(global.isPaused) !== 0x3;
-        return false;
-    }
-
-    isInterfaceShown(): boolean {
-        //return this.emu.rdramRead8(global.interface_shown) === 0xFF;
-        return true;
+        return this.emu.rdramRead8(0x803F7097) !== 0x0;
     }
 }

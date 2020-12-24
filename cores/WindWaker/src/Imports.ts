@@ -1,3 +1,4 @@
+export * from './GlobalContext';
 export * from './Link';
 export * from './QuestStatus';
 export * from './SaveContext';
