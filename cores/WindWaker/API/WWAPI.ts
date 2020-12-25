@@ -1,4 +1,4 @@
-import { ICore } from 'modloader64_api/IModLoaderAPI';
+ import { ICore } from 'modloader64_api/IModLoaderAPI';
 import { IPacketHeader } from 'modloader64_api/NetworkHandler';
 
 export const enum Sword {
@@ -104,6 +104,19 @@ export interface IInventoryFields {
     FIELD_DELIVERY_BAG: boolean;
     FIELD_HOOKSHOT: boolean;
     FIELD_SKULL_HAMMER: boolean;
+    spoils_slots: Buffer;
+    bait_slots: Buffer;
+    delivery_slots: Buffer;
+    owned_delivery: Buffer;
+    owned_spoils: Buffer;
+    owned_bait: Buffer;
+    count_spoils: Buffer;
+    count_delivery: Buffer;
+    count_bait: Buffer;
+
+    rupeeCap: number;
+    bombCap: number;
+    arrowCap: number;
 }
 
 export const enum InventorySlots {
@@ -132,6 +145,11 @@ export const enum InventorySlots {
 
 export interface IQuestStatus {
 
+    swordLevel: Buffer;
+    swordEquip: number;
+    shieldLevel: Buffer;
+    shieldEquip: number;
+    braceletEquip: number;
     songs: Buffer;
     triforce: Buffer;
     pearls: Buffer;

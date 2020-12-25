@@ -18,106 +18,72 @@ export const enum SwordBitMap {
     MasterSwordFull = 3,
 }
 
-export class QuestStatus extends JSONTemplate implements API.IQuestStatus, API.ISwords, API.IShields {
+export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     private emulator: IMemory;
-    private triforceFlags: FlagManager;
-    private triforceFlagsAddr: number = 0x803C4CC6;
-    private songFlags: FlagManager;
-    private songFlagsAddr: number = 0x803C4CC5;
-    private pearlFlags: FlagManager;
-    private pearlFlagAddr: number = 0x803C4CC7;
 
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;
-        this.triforceFlags = new FlagManager(emu, this.triforceFlagsAddr);
-        this.songFlags = new FlagManager(emu, this.songFlagsAddr);
-        this.pearlFlags = new FlagManager(emu, this.pearlFlagAddr);
     }
 
     //Bitfields 
-    get swordLevel(): API.Sword {
-        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
-        if (bits[SwordBitMap.HerosSword] === 1) return API.Sword.Hero;
-        else if (bits[SwordBitMap.MasterSword] === 1) return API.Sword.Master;
-        else if (bits[SwordBitMap.MasterSwordHalf] === 1) return API.Sword.MasterHalf;
-        else if (bits[SwordBitMap.MasterSwordFull] === 1) return API.Sword.MasterFull;
-        return 0;
+    get swordLevel(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CBC, 0x1);
     }
 
-    set swordLevel(level: API.Sword) {
-        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
-        switch (level) {
-            case API.Sword.NONE:
-                bits[SwordBitMap.HerosSword] = 0;
-                bits[SwordBitMap.MasterSword] = 0;
-                bits[SwordBitMap.MasterSwordHalf] = 0;
-                bits[SwordBitMap.MasterSwordFull] = 0;
-                break;
-            case API.Sword.Hero:
-                bits[SwordBitMap.HerosSword] = 1;
-                bits[SwordBitMap.MasterSword] = 0;
-                bits[SwordBitMap.MasterSwordHalf] = 0;
-                bits[SwordBitMap.MasterSwordFull] = 0;
-                break;
-            case API.Sword.Master:
-                bits[SwordBitMap.HerosSword] = 0;
-                bits[SwordBitMap.MasterSword] = 1;
-                bits[SwordBitMap.MasterSwordHalf] = 0;
-                bits[SwordBitMap.MasterSwordFull] = 0;
-                break;
-            case API.Sword.MasterHalf:
-                bits[SwordBitMap.HerosSword] = 0;
-                bits[SwordBitMap.MasterSword] = 0;
-                bits[SwordBitMap.MasterSwordHalf] = 1;
-                bits[SwordBitMap.MasterSwordFull] = 0;
-                break;
-            case API.Sword.MasterFull:
-                bits[SwordBitMap.HerosSword] = 0;
-                bits[SwordBitMap.MasterSword] = 0;
-                bits[SwordBitMap.MasterSwordHalf] = 0;
-                bits[SwordBitMap.MasterSwordFull] = 1;
-                break;
-        }
-        this.emulator.rdramWriteBits8(0x803C4CBC, bits);
+    set swordLevel(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CBC, flag);
     }
 
-    get shieldLevel(): API.Shield {
-        let bits = this.emulator.rdramReadBits8(0x803C4CBC);
-        if (bits[ShieldBitMap.HEROES] === 1) return API.Shield.HERO;
-        else if (bits[ShieldBitMap.MIRROR] === 1) return API.Shield.MIRROR;
-        return 0;
+    get swordEquip(): number {
+        return this.emulator.rdramRead8(0x803C4C16);
     }
 
-    set shieldLevel(level: API.Shield) {
-        let bits = this.emulator.rdramReadBits8(0x803C4CBD);
-        switch (level) {
-            case API.Shield.NONE:
-                bits[ShieldBitMap.HEROES] = 0;
-                bits[ShieldBitMap.MIRROR] = 0;
-                break;
-            case API.Shield.HERO:
-                bits[ShieldBitMap.HEROES] = 1;
-                bits[ShieldBitMap.MIRROR] = 0;
-                break;
-            case API.Shield.MIRROR:
-                bits[ShieldBitMap.HEROES] = 0;
-                bits[ShieldBitMap.MIRROR] = 1;
-                break;
-        }
-        this.emulator.rdramWriteBits8(0x803C4CBD, bits);
+    set swordEquip(flag: number) {
+        this.emulator.rdramWrite8(0x803C4C16, flag)
+    }
+
+    get shieldLevel(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CBD, 0x1);
+    }
+
+    set shieldLevel(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CBD, flag);
+    }
+
+    get shieldEquip(): number {
+        return this.emulator.rdramRead8(0x803C4C17);
+    }
+
+    set shieldEquip(flag: number) {
+        this.emulator.rdramWrite8(0x803C4C17, flag)
     }
 
     get bracelet(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CBE, 0)
+        return this.emulator.rdramReadBuffer(0x803C4CBE, 0x1)
     }
 
     set bracelet(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CBE, flag)
+        this.emulator.rdramWriteBuffer(0x803C4CBE, flag);
+    }
+
+    get braceletEquip(): number {
+        return this.emulator.rdramRead8(0x803C4C18)
+    }
+
+    set braceletEquip(flag: number) {
+        this.emulator.rdramWrite8(0x803C4C18, flag);
+    }
+
+    get currentWallet(): number {
+        return this.emulator.rdramRead8(0x803C4C1A);
+    }
+    set currentWallet(flag: number) {
+        this.emulator.rdramWrite8(0x803C4C1A, flag);
     }
 
     get pirate_charm(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CBF, 0)
+        return this.emulator.rdramReadBuffer(0x803C4CBF, 0x1)
     }
 
     set pirate_charm(flag: Buffer) {
@@ -125,7 +91,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus, API.I
     }
 
     get hero_charm(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CC0, 0)
+        return this.emulator.rdramReadBuffer(0x803C4CC0, 0x1)
     }
 
     set hero_charm(flag: Buffer) {
@@ -201,7 +167,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus, API.I
     set deciphered_triforce(flag: Buffer) {
         this.emulator.rdramWriteBuffer(0x803C4D4D, flag);
     }
-    
+
     /*
     803C4CBC-803C4CC8 - Bitfield of which items you own.
     803C4CBC,1 - Bitfield of which swords you own.

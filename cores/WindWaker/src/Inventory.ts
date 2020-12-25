@@ -30,124 +30,124 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     }
 
     get FIELD_SAIL(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.SAIL)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_SAIL(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.SAIL : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.SAIL)
     }
 
     get FIELD_WIND_WAKER(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.WIND_WAKER)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_WIND_WAKER(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.WIND_WAKER : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.WIND_WAKER)
     }
 
     get FIELD_GRAPPLING_HOOK(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.GRAPPLING_HOOK)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_GRAPPLING_HOOK(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.GRAPPLING_HOOK : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.GRAPPLING_HOOK)
     }
 
     get FIELD_SPOILS_BAG(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.SPOILS_BAG)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_SPOILS_BAG(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.SPOILS_BAG : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.SPOILS_BAG)
     }
 
     get FIELD_BOOMERANG(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.BOOMERANG)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_BOOMERANG(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.BOOMERANG : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.BOOMERANG)
     }
 
     get FIELD_DEKU_LEAF(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.DEKU_LEAF)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_DEKU_LEAF(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.DEKU_LEAF : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.DEKU_LEAF)
     }
 
     get FIELD_TINGLE_TUNER(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.TINGLE_TUNER)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_TINGLE_TUNER(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.TINGLE_TUNER : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TINGLE_TUNER)
     }
 
     get FIELD_PICTO_BOX(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.PICTO_BOX)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_PICTO_BOX(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.PICTO_BOX : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.PICTO_BOX)
     }
 
     get FIELD_IRON_BOOTS(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.IRON_BOOTS)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_IRON_BOOTS(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.IRON_BOOTS : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.IRON_BOOTS)
     }
 
     get FIELD_MAGIC_ARMOR(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.MAGIC_ARMOR)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_MAGIC_ARMOR(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.MAGIC_ARMOR : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.MAGIC_ARMOR)
     }
 
     get FIELD_BAIT_BAG(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.BAIT_BAG)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_BAIT_BAG(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.BAIT_BAG : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.BAIT_BAG)
     }
 
     get FIELD_BOW(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.BOW)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_BOW(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.BOW : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.BOW)
     }
 
     get FIELD_BOMBS(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.BOMBS)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_BOMBS(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.BOMBS : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.BOMBS)
     }
 
     get FIELD_BOTTLE1(): InventoryItem {
-        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+        return this.getItemInSlot(API.InventorySlots.BOTTLE1);
     }
     set FIELD_BOTTLE1(content: API.InventoryItem) {
         if (
@@ -156,11 +156,11 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         ) {
             return;
         }
-        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE1);
     }
 
     get FIELD_BOTTLE2(): API.InventoryItem {
-        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+        return this.getItemInSlot(API.InventorySlots.BOTTLE2);
     }
     set FIELD_BOTTLE2(content: API.InventoryItem) {
         if (
@@ -169,11 +169,11 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         ) {
             return;
         }
-        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE2);
     }
 
     get FIELD_BOTTLE3(): API.InventoryItem {
-        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+        return this.getItemInSlot(API.InventorySlots.BOTTLE3);
     }
     set FIELD_BOTTLE3(content: API.InventoryItem) {
         if (
@@ -182,7 +182,7 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         ) {
             return;
         }
-        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE3);
     }
 
     get FIELD_BOTTLE4(): API.InventoryItem {
@@ -199,33 +199,33 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     }
 
     get FIELD_DELIVERY_BAG(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.DELIVERY_BAG)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_DELIVERY_BAG(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.DELIVERY_BAG : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.DELIVERY_BAG)
     }
 
     get FIELD_HOOKSHOT(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.HOOKSHOT)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_HOOKSHOT(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.HOOKSHOT : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.HOOKSHOT)
     }
 
     get FIELD_SKULL_HAMMER(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        let val = this.getItemInSlot(API.InventorySlots.SKULL_HAMMER)
         return !(val === API.InventoryItem.NONE);
     }
     set FIELD_SKULL_HAMMER(bool: boolean) {
-        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+        let value = bool ? API.InventoryItem.SKULL_HAMMER : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.SKULL_HAMMER)
     }
 
-    //Counts
+    // Counts
     get arrowCount(): number {
         return this.emulator.rdramRead8(0x803C4C71);
     }
@@ -269,7 +269,7 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         this.emulator.rdramWrite8(0x803C4C1A, flag);
     }
 
-    //Bag Content Slots
+    // Bag Content Slots
     get spoils_slots(): Buffer {
         return this.emulator.rdramReadBuffer(this.spoilsBag, 0x8);
     }
@@ -290,40 +290,47 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     set delivery_slots(flag: Buffer) {
         this.emulator.rdramWriteBuffer(this.deliveryBag, flag);
     }
-
-    //Bitfield of obtained bag content flags
-    //TODO: Extrapolate into a function
-
-    get_owned_delivery(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4C98 + byte, bit);
+    
+    get owned_delivery(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4C98, 0x4);
+    }
+    set owned_delivery(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4C98, flag);
     }
 
-    get_owned_spoils(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4C9C, index);
+    get owned_spoils(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4C9C, 0x1);
+    }
+    set owned_spoils(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4C9C, flag);
     }
 
-    get_owned_bait(index: number): boolean {
-        return this.emulator.rdramReadBit8(0x803C4C9D, index)
+    get owned_bait(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4C9D, 0x1)
+    }
+    set owned_bait(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4C9D, flag);
     }
 
-    get_count_spoils(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CA4 + byte, bit);
+    get count_spoils(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CA4, 0x7);
+    }
+    set count_spoils(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CA4, flag);
     }
 
-    get_count_delivery(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CAC + byte, bit);
+    get count_delivery(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CAC, 0x8);
+    }
+    set count_delivery(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CAC, flag);
     }
 
-    get_count_bait(index: number): boolean {
-        let byte = Math.floor(index / 8)
-        let bit = index % 8
-        return this.emulator.rdramReadBit8(0x803C4CB4 + byte, bit);
+    get count_bait(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CB4, 0x7);
+    }
+    set count_bait(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CB4, flag);
     }
 
     getItemInSlot(slotId: number): API.InventoryItem {
