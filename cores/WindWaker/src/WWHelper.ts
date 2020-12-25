@@ -23,19 +23,19 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isLinkControllable(): boolean {
-        let r1 = this.emu.rdramRead8(0x803C9EB8);
-        let r2 = this.emu.rdramRead8(0x803C9EA2);
-
-        return (r1) !== 0xFF || (r2) !== 0x00;
+        let r1 = this.emu.rdramRead16(0x803C9EB8);
+        return (r1) === 0xFFFF && !this.isSceneChange();
     }
 
     isTitleScreen(): boolean {
-        let sceneNameNew = this.global.current_scene_name.toString().replace(/\0.*$/g, '');
-        return sceneNameNew === "sea_T" || sceneNameNew === "Name";
+        let r = this.emu.rdramRead32(0x803F6B44);
+        return (r) === 0x00000000;
     }
 
     isSceneChange(): boolean {
-        return (this.emu.rdramRead8(0x803C9D54) === 0x1)
+        let r1 = this.emu.rdramRead32(0x803C9EC4);
+        let r2 = this.emu.rdramRead8(0x803C9EA2);
+        return (r1 !== 0x3F800000 || r2 !== 0x0);
     }
 
     isLinkExists(): boolean {
@@ -43,7 +43,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isSceneNameValid(): boolean {
-        return this.global.current_scene_name.toString().replace(/\0.*$/g, '') !== "";
+        return this.global.current_scene_name !== "";
     }
 
     isPaused(): boolean {

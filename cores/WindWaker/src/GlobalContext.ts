@@ -11,11 +11,11 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
         this.emulator = emu;
     }
 
-    get current_scene_name(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8)
+    get current_scene_name(): string {
+        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8).toString().replace(/\0.*$/g, '');
     }
-    get next_scene_name(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C9D48, 0x8);
+    get next_scene_name(): string {
+        return this.emulator.rdramReadBuffer(0x803C9D48, 0x8).toString().replace(/\0.*$/g, '');
     }
     get next_room_number(): number {
         return this.emulator.rdramRead8(0x803C9D52);
@@ -23,5 +23,4 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
     get linkPointer(): number {
         return this.emulator.rdramRead32(0x803CA74C);
     }
-
 }

@@ -40,7 +40,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     }
 
     set swordEquip(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C16, flag)
+        this.emulator.rdramWrite8(0x803C4C16, flag);
     }
 
     get shieldLevel(): Buffer {
@@ -56,7 +56,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     }
 
     set shieldEquip(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C17, flag)
+        this.emulator.rdramWrite8(0x803C4C17, flag);
     }
 
     get bracelet(): Buffer {

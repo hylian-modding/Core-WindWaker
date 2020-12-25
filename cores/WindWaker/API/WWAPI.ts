@@ -1,4 +1,4 @@
- import { ICore } from 'modloader64_api/IModLoaderAPI';
+import { ICore } from 'modloader64_api/IModLoaderAPI';
 import { IPacketHeader } from 'modloader64_api/NetworkHandler';
 
 export const enum Sword {
@@ -165,8 +165,8 @@ export interface IQuestStatus {
 }
 
 export interface IGlobalContext {
-    current_scene_name: Buffer;
-    next_scene_name: Buffer;
+    current_scene_name: string;
+    next_scene_name: string;
     next_room_number: number;
     linkPointer: number;
 }

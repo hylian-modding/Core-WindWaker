@@ -245,6 +245,7 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     }
     set rupeeCount(flag: number) {
         this.emulator.rdramWrite16(0x803C4C0C, flag);
+        this.emulator.rdramWrite16(0x803CA7CE, flag);
     }
 
     //Capacity
