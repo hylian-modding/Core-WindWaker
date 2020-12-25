@@ -4,6 +4,7 @@ import { FlagManager } from 'modloader64_api/FlagManager';
 import { JSONTemplate } from 'modloader64_api/JSONTemplate';
 import { ILogger } from 'modloader64_api/IModLoaderAPI';
 import { NONAME } from 'dns';
+import { IInventoryFields, InventoryItem } from '../API/Imports';
 
 export class Inventory extends JSONTemplate implements API.IInventory {
     private emulator: IMemory;
@@ -19,151 +20,209 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     }
 
     //Inventory Slots
-    get FIELD_TELESCOPE(): number {
-        return this.emulator.rdramRead8(this.instance + 0x0);
+    get FIELD_TELESCOPE(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_TELESCOPE(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x0, flag);
-    }
-
-    get FIELD_SAIL(): number {
-        return this.emulator.rdramRead8(this.instance + 0x1);
-    }
-    set FIELD_SAIL(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x1, flag);
+    set FIELD_TELESCOPE(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_WIND_WAKER(): number {
-        return this.emulator.rdramRead8(this.instance + 0x2);
+    get FIELD_SAIL(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_WIND_WAKER(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x2, flag);
-    }
-
-    get FIELD_GRAPPLING_HOOK(): number {
-        return this.emulator.rdramRead8(this.instance + 0x3);
-    }
-    set FIELD_GRAPPLING_HOOK(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x3, flag);
+    set FIELD_SAIL(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_SPOILS_BAG(): number {
-        return this.emulator.rdramRead8(this.instance + 0x4);
+    get FIELD_WIND_WAKER(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_SPOILS_BAG(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x4, flag);
-    }
-
-    get FIELD_BOOMERANG(): number {
-        return this.emulator.rdramRead8(this.instance + 0x5);
-    }
-    set FIELD_BOOMERANG(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x5, flag);
+    set FIELD_WIND_WAKER(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_DEKU_LEAF(): number {
-        return this.emulator.rdramRead8(this.instance + 0x6);
+    get FIELD_GRAPPLING_HOOK(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_DEKU_LEAF(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x6, flag);
-    }
-
-    get FIELD_TINGLE_TUNER(): number {
-        return this.emulator.rdramRead8(this.instance + 0x7);
-    }
-    set FIELD_TINGLE_TUNER(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x7, flag);
+    set FIELD_GRAPPLING_HOOK(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_PICTO_BOX(): number {
-        return this.emulator.rdramRead8(this.instance + 0x8);
+    get FIELD_SPOILS_BAG(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_PICTO_BOX(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x8, flag);
-    }
-
-    get FIELD_IRON_BOOTS(): number {
-        return this.emulator.rdramRead8(this.instance + 0x9);
-    }
-    set FIELD_IRON_BOOTS(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x9, flag);
+    set FIELD_SPOILS_BAG(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_MAGIC_ARMOR(): number {
-        return this.emulator.rdramRead8(this.instance + 0xA);
+    get FIELD_BOOMERANG(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_MAGIC_ARMOR(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xA, flag);
-    }
-
-    get FIELD_BAIT_BAG(): number {
-        return this.emulator.rdramRead8(this.instance + 0xB);
-    }
-    set FIELD_BAIT_BAG(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xB, flag);
+    set FIELD_BOOMERANG(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_BOW(): number {
-        return this.emulator.rdramRead8(this.instance + 0xC);
+    get FIELD_DEKU_LEAF(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_BOW(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xC, flag);
-    }
-
-    get FIELD_BOMBS(): number {
-        return this.emulator.rdramRead8(this.instance + 0xD);
-    }
-    set FIELD_BOMBS(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xD, flag);
+    set FIELD_DEKU_LEAF(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_BOTTLE1(): number {
-        return this.emulator.rdramRead8(this.instance + 0xE);
+    get FIELD_TINGLE_TUNER(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_BOTTLE1(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xE, flag);
-    }
-
-    get FIELD_BOTTLE2(): number {
-        return this.emulator.rdramRead8(this.instance + 0xF);
-    }
-    set FIELD_BOTTLE2(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0xF, flag);
+    set FIELD_TINGLE_TUNER(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_BOTTLE3(): number {
-        return this.emulator.rdramRead8(this.instance + 0x10);
+    get FIELD_PICTO_BOX(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_BOTTLE3(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x10, flag);
-    }
-
-    get FIELD_BOTTLE4(): number {
-        return this.emulator.rdramRead8(this.instance + 0x11);
-    }
-    set FIELD_BOTTLE4(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x11, flag);
+    set FIELD_PICTO_BOX(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_DELIVERY_BAG(): number {
-        return this.emulator.rdramRead8(this.instance + 0x12);
+    get FIELD_IRON_BOOTS(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_DELIVERY_BAG(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x12, flag);
-    }
-
-    get FIELD_HOOKSHOT(): number {
-        return this.emulator.rdramRead8(this.instance + 0x13);
-    }
-    set FIELD_HOOKSHOT(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x13, flag);
+    set FIELD_IRON_BOOTS(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
-    get FIELD_SKULL_HAMMER(): number {
-        return this.emulator.rdramRead8(this.instance + 0x14);
+    get FIELD_MAGIC_ARMOR(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
     }
-    set FIELD_SKULL_HAMMER(flag: number) {
-        this.emulator.rdramWrite8(this.instance + 0x14, flag);
+    set FIELD_MAGIC_ARMOR(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_BAIT_BAG(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_BAIT_BAG(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_BOW(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_BOW(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_BOMBS(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_BOMBS(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_BOTTLE1(): InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+    }
+    set FIELD_BOTTLE1(content: API.InventoryItem) {
+        if (
+            content < API.InventoryItem.BOTTLE_EMPTY ||
+            content > API.InventoryItem.BOTTLE_FOREST_WATER
+        ) {
+            return;
+        }
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+    }
+
+    get FIELD_BOTTLE2(): API.InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+    }
+    set FIELD_BOTTLE2(content: API.InventoryItem) {
+        if (
+            content < API.InventoryItem.BOTTLE_EMPTY ||
+            content > API.InventoryItem.BOTTLE_FOREST_WATER
+        ) {
+            return;
+        }
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+    }
+
+    get FIELD_BOTTLE3(): API.InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+    }
+    set FIELD_BOTTLE3(content: API.InventoryItem) {
+        if (
+            content < API.InventoryItem.BOTTLE_EMPTY ||
+            content > API.InventoryItem.BOTTLE_FOREST_WATER
+        ) {
+            return;
+        }
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+    }
+
+    get FIELD_BOTTLE4(): API.InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.BOTTLE4);
+    }
+    set FIELD_BOTTLE4(content: API.InventoryItem) {
+        if (
+            content < API.InventoryItem.BOTTLE_EMPTY ||
+            content > API.InventoryItem.BOTTLE_FOREST_WATER
+        ) {
+            return;
+        }
+        this.setItemInSlot(content, API.InventorySlots.BOTTLE4);
+    }
+
+    get FIELD_DELIVERY_BAG(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_DELIVERY_BAG(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_HOOKSHOT(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_HOOKSHOT(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
+    }
+
+    get FIELD_SKULL_HAMMER(): boolean {
+        let val = this.getItemInSlot(API.InventorySlots.TELESCOPE)
+        return !(val === API.InventoryItem.NONE);
+    }
+    set FIELD_SKULL_HAMMER(bool: boolean) {
+        let value = bool ? API.InventoryItem.TELESCOPE : API.InventoryItem.NONE;
+        this.setItemInSlot(value, API.InventorySlots.TELESCOPE)
     }
 
     //Counts
@@ -265,5 +324,28 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         let byte = Math.floor(index / 8)
         let bit = index % 8
         return this.emulator.rdramReadBit8(0x803C4CB4 + byte, bit);
+    }
+
+    getItemInSlot(slotId: number): API.InventoryItem {
+        if (slotId < 0 || slotId > API.InventorySlots.SKULL_HAMMER) {
+            return API.InventoryItem.NONE;
+        }
+
+        let itemId: number = this.emulator.rdramRead8(this.instance + slotId);
+        return itemId as API.InventoryItem;
+    }
+    getSlotForItem(item: API.InventoryItem): number {
+        for (let i = 0; i <= API.InventorySlots.SKULL_HAMMER; i++) {
+            if (this.getItemInSlot(i) == item) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    setItemInSlot(item: API.InventoryItem, slot: number): void {
+        if (slot < 0 || slot > API.InventorySlots.SKULL_HAMMER) {
+            return;
+        }
+        this.emulator.rdramWrite8(this.instance + slot, item.valueOf());
     }
 }

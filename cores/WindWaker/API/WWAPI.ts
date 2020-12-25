@@ -36,6 +36,9 @@ export const enum MagicQuantities {
 }
 
 export interface IInventory extends IInventoryFields, IInventoryCounts {
+    getItemInSlot(slotId: number): InventoryItem;
+    getSlotForItem(item: InventoryItem): number;
+    setItemInSlot(item: InventoryItem, slot: number): void;
 }
 
 
@@ -63,7 +66,7 @@ export enum InventoryItem {
     BOTTLE_POTION_BLUE = 0x53,
     BOTTLE_ELIXER_HALF = 0x54,
     BOTTLE_ELIXER_FULL = 0x55,
-    BOTTLE_WATTER = 0x56,
+    BOTTLE_WATER = 0x56,
     BOTTLE_FAIRY = 0x57,
     BOTTLE_FIREFLY = 0x58,
     BOTTLE_FOREST_WATER = 0x59,
@@ -80,27 +83,51 @@ export interface IInventoryCounts {
 }
 
 export interface IInventoryFields {
-    FIELD_TELESCOPE: number;
-    FIELD_SAIL: number;
-    FIELD_WIND_WAKER: number;
-    FIELD_GRAPPLING_HOOK: number;
-    FIELD_SPOILS_BAG: number;
-    FIELD_BOOMERANG: number;
-    FIELD_DEKU_LEAF: number;
-    FIELD_TINGLE_TUNER: number;
-    FIELD_PICTO_BOX: number;
-    FIELD_IRON_BOOTS: number;
-    FIELD_MAGIC_ARMOR: number;
-    FIELD_BAIT_BAG: number;
-    FIELD_BOW: number;
-    FIELD_BOMBS: number;
-    FIELD_BOTTLE1: number;
-    FIELD_BOTTLE2: number;
-    FIELD_BOTTLE3: number;
-    FIELD_BOTTLE4: number;
-    FIELD_DELIVERY_BAG: number;
-    FIELD_HOOKSHOT: number;
-    FIELD_SKULL_HAMMER: number;
+    FIELD_TELESCOPE: boolean;
+    FIELD_SAIL: boolean;
+    FIELD_WIND_WAKER: boolean;
+    FIELD_GRAPPLING_HOOK: boolean;
+    FIELD_SPOILS_BAG: boolean;
+    FIELD_BOOMERANG: boolean;
+    FIELD_DEKU_LEAF: boolean;
+    FIELD_TINGLE_TUNER: boolean;
+    FIELD_PICTO_BOX: boolean;
+    FIELD_IRON_BOOTS: boolean;
+    FIELD_MAGIC_ARMOR: boolean;
+    FIELD_BAIT_BAG: boolean;
+    FIELD_BOW: boolean;
+    FIELD_BOMBS: boolean;
+    FIELD_BOTTLE1: InventoryItem;
+    FIELD_BOTTLE2: InventoryItem;
+    FIELD_BOTTLE3: InventoryItem;
+    FIELD_BOTTLE4: InventoryItem;
+    FIELD_DELIVERY_BAG: boolean;
+    FIELD_HOOKSHOT: boolean;
+    FIELD_SKULL_HAMMER: boolean;
+}
+
+export const enum InventorySlots {
+    TELESCOPE,
+    SAIL,
+    WIND_WAKER,
+    GRAPPLING_HOOK,
+    SPOILS_BAG,
+    BOOMERANG,
+    DEKU_LEAF,
+    TINGLE_TUNER,
+    PICTO_BOX,
+    IRON_BOOTS,
+    MAGIC_ARMOR,
+    BAIT_BAG,
+    BOW,
+    BOMBS,
+    BOTTLE1,
+    BOTTLE2,
+    BOTTLE3,
+    BOTTLE4,
+    DELIVERY_BAG,
+    HOOKSHOT,
+    SKULL_HAMMER
 }
 
 export interface IQuestStatus {
