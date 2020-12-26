@@ -21,6 +21,6 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
         return this.emulator.rdramRead8(0x803C9D52);
     }
     get linkPointer(): number {
-        return this.emulator.rdramRead32(0x803CA74C);
+        return this.emulator.rdramRead32(0x803CA410);
     }
 }

@@ -181,7 +181,9 @@ export interface ISaveContext {
 }
 
 export interface ILink {
-
+    pos: Buffer;
+    rot: Buffer;
+    matrixData: Buffer;
 }
 
 export interface IWWHelper {
