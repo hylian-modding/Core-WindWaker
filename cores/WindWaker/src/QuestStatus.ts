@@ -27,6 +27,13 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     }
 
     //Bitfields 
+    get hasTunic(): boolean {
+        return this.emulator.rdramReadBit8(0x803C5256, 0);
+    }
+    set hasTunic(flag: boolean) {
+        this.emulator.rdramWriteBit8(0x803C5256, 0, flag);
+    }
+
     get swordLevel(): Buffer {
         return this.emulator.rdramReadBuffer(0x803C4CBC, 0x1);
     }

@@ -144,7 +144,7 @@ export const enum InventorySlots {
 }
 
 export interface IQuestStatus {
-
+    hasTunic: boolean;
     swordLevel: Buffer;
     swordEquip: number;
     shieldLevel: Buffer;
