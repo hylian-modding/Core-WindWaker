@@ -12,10 +12,10 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
     }
 
     get current_scene_name(): string {
-        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8).toString().replace(/\0.*$/g, '');
+        return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8).toString();
     }
     get next_scene_name(): string {
-        return this.emulator.rdramReadBuffer(0x803C9D48, 0x8).toString().replace(/\0.*$/g, '');
+        return this.emulator.rdramReadBuffer(0x803C9D48, 0x8).toString();
     }
     get next_room_number(): number {
         return this.emulator.rdramRead8(0x803C9D52);

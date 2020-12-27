@@ -68,7 +68,7 @@ export class WindWaker implements ICore, API.IWWCore {
         if (this.helper.isSceneChange()) {
             this.scene_change_timer += 1;
             if(this.scene_change_timer == 2) {
-                bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.next_scene_name.toString().replace(/\0.*$/g, ''));
+                bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
                 this.touching_loading_zone = false;
             }
         }
