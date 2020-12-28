@@ -10,6 +10,7 @@ import path from 'path';
 import * as API from './API/Imports';
 import { GlobalContext, Link, SaveContext, WWHelper } from "./src/Imports";
 import * as CORE from './src/Imports';
+import {BindVar, BindVar_Sizes} from 'modloader64_api/BindVar';
 
 export class WindWaker implements ICore, API.IWWCore {
     header = "GZLE01";
@@ -23,6 +24,8 @@ export class WindWaker implements ICore, API.IWWCore {
     isSaveLoaded = false;
     touching_loading_zone = false;
     last_known_scene: string = "";
+    @BindVar(0x803C9De0, BindVar_Sizes.u16)
+    isLinkLoadingZone!: number;
 
     @Preinit(
     )
@@ -56,7 +59,7 @@ export class WindWaker implements ICore, API.IWWCore {
     onTick() {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
 
-        if (this.helper.isSceneChange()) {
+        if (this.isLinkLoadingZone !== 0x02) {
             bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
             this.touching_loading_zone = true;
         }
