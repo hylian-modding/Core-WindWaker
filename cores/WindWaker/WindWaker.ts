@@ -10,7 +10,7 @@ import path from 'path';
 import * as API from './API/Imports';
 import { GlobalContext, Link, SaveContext, WWHelper } from "./src/Imports";
 import * as CORE from './src/Imports';
-import {BindVar, BindVar_Sizes} from 'modloader64_api/BindVar';
+import { BindVar, BindVar_Sizes } from 'modloader64_api/BindVar';
 
 export class WindWaker implements ICore, API.IWWCore {
     header = "GZLE";
@@ -64,6 +64,10 @@ export class WindWaker implements ICore, API.IWWCore {
         if (this.touching_loading_zone && this.helper.isSceneChange()) {
             bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
             this.touching_loading_zone = false;
+        }
+        if (this.last_known_scene !== this.global.current_scene_name) {
+            bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
+            this.last_known_scene = this.global.current_scene_name;
         }
 
         this.eventTicks.forEach((value: Function, key: string) => {
