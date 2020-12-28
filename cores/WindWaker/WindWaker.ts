@@ -13,7 +13,7 @@ import * as CORE from './src/Imports';
 import {BindVar, BindVar_Sizes} from 'modloader64_api/BindVar';
 
 export class WindWaker implements ICore, API.IWWCore {
-    header = "GZLE01";
+    header = "GZLE";
     @ModLoaderAPIInject()
     ModLoader: IModLoaderAPI = {} as IModLoaderAPI;
     eventTicks: Map<string, Function> = new Map<string, Function>();
@@ -58,8 +58,7 @@ export class WindWaker implements ICore, API.IWWCore {
     @onTick()
     onTick() {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
-
-        if (this.isLinkLoadingZone !== 0x02) {
+        if (this.isLinkLoadingZone !== 0x02 && !this.touching_loading_zone) {
             bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
             this.touching_loading_zone = true;
         }
