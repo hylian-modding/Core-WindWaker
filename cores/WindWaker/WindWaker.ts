@@ -23,10 +23,6 @@ export class WindWaker implements ICore, API.IWWCore {
     isSaveLoaded = false;
     touching_loading_zone = false;
     last_known_scene: string = "";
-    scene_change_timer: number = 0;
-
-    constructor() {
-    }
 
     @Preinit(
     )
@@ -61,18 +57,13 @@ export class WindWaker implements ICore, API.IWWCore {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
 
         if (this.helper.isSceneChange()) {
-            this.scene_change_timer += 1;
-            if (this.scene_change_timer == 2) {
-                bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
-                this.touching_loading_zone = true;
-            }
+            bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
+            this.touching_loading_zone = true;
         }
         if (this.touching_loading_zone && this.helper.isLinkControllable()) {
             bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
             this.touching_loading_zone = false;
-            this.scene_change_timer = 0;
         }
-        if (this.helper.isLinkExists()) this.scene_change_timer = 0;
 
         this.eventTicks.forEach((value: Function, key: string) => {
             value();
