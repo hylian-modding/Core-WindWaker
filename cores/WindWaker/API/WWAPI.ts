@@ -165,6 +165,7 @@ export interface IQuestStatus {
 }
 
 export interface IGlobalContext {
+    current_scene_frame: number;
     current_scene_name: string;
     next_scene_name: string;
     next_room_number: number;
@@ -187,6 +188,7 @@ export interface ILink {
 }
 
 export interface IWWHelper {
+    isLoadingZone(): boolean;
     isLinkExists(): boolean;
     isTitleScreen(): boolean;
     isSceneNameValid(): boolean;

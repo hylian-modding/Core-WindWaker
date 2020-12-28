@@ -30,6 +30,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
 
     isTitleScreen(): boolean {
         //let r = this.emu.rdramRead32(0x803F6B44);
+        if(!this.isSceneNameValid()) return false;
 
         let value1 = this.emu.rdramRead32(0x803C9D3C);
         let value2 = this.emu.rdramRead32(0x803C9D3C + 0x4);
@@ -39,9 +40,14 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isSceneChange(): boolean {
-        let r1 = this.emu.rdramRead32(0x803C9EC4);
-        let r2 = this.emu.rdramRead8(0x803C9EA2);
-        return (r1 !== 0x3F800000 || r2 !== 0x0);
+        let r1 = this.global.current_scene_frame;
+        return (r1 === 0)
+    }
+
+    isLoadingZone(): boolean {
+        let r1 = this.emu.rdramRead16(0x803C9DE0);
+
+        return (r1 === 0x1 || r1 === 0x3);
     }
 
     isLinkExists(): boolean {
@@ -49,7 +55,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isSceneNameValid(): boolean {
-        return this.global.current_scene_name !== "\0";
+        return Buffer.from(this.global.current_scene_name).toString('hex') !== "0000000000000000";
     }
 
     isPaused(): boolean {

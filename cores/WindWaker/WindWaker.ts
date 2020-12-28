@@ -24,7 +24,6 @@ export class WindWaker implements ICore, API.IWWCore {
     isSaveLoaded = false;
     touching_loading_zone = false;
     last_known_scene: string = "";
-    @BindVar(0x803C9De0, BindVar_Sizes.u16)
     isLinkLoadingZone!: number;
 
     @Preinit(
@@ -58,11 +57,11 @@ export class WindWaker implements ICore, API.IWWCore {
     @onTick()
     onTick() {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
-        if (this.isLinkLoadingZone !== 0x02 && !this.touching_loading_zone) {
+        if (this.helper.isLoadingZone() && !this.touching_loading_zone) {
             bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
             this.touching_loading_zone = true;
         }
-        if (this.touching_loading_zone && this.helper.isLinkControllable()) {
+        if (this.touching_loading_zone && this.helper.isSceneChange()) {
             bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
             this.touching_loading_zone = false;
         }

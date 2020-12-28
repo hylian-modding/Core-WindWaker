@@ -11,6 +11,9 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
         this.emulator = emu;
     }
 
+    get current_scene_frame(): number {
+        return this.emulator.rdramRead32(0x803CA620);
+    }
     get current_scene_name(): string {
         return this.emulator.rdramReadBuffer(0x803C9D3C, 0x8).toString();
     }
