@@ -58,6 +58,7 @@ export class WindWaker implements ICore, API.IWWCore {
     onTick() {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
         if (this.helper.isLoadingZone() && !this.touching_loading_zone) {
+            this.ModLoader.emulator.rdramWrite8(0x81801004, 0);
             bus.emit(API.WWEvents.ON_LOADING_ZONE, {});
             this.touching_loading_zone = true;
         }
@@ -65,11 +66,6 @@ export class WindWaker implements ICore, API.IWWCore {
             bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
             this.touching_loading_zone = false;
         }
-        if (this.last_known_scene !== this.global.current_scene_name) {
-            bus.emit(API.WWEvents.ON_SCENE_CHANGE, this.global.current_scene_name);
-            this.last_known_scene = this.global.current_scene_name;
-        }
-
         this.eventTicks.forEach((value: Function, key: string) => {
             value();
         });
