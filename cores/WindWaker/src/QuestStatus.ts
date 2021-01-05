@@ -105,6 +105,13 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator.rdramWriteBuffer(0x803C4CC0, flag)
     }
 
+    get piece_of_heart(): number {
+        return this.emulator.rdramRead16(0x803C4C08);
+    }
+    set piece_of_heart(flag: number) {
+        this.emulator.rdramWrite16(0x803C4C08, flag);
+    }
+
     /*
     0 - Wind's Requiem
     1 - Ballad of Gales

@@ -157,6 +157,7 @@ export interface IQuestStatus {
     bracelet: Buffer;
     pirate_charm: Buffer;
     hero_charm: Buffer;
+    piece_of_heart: number;
     owned_charts: Buffer;
     opened_charts: Buffer;
     completed_charts: Buffer;
