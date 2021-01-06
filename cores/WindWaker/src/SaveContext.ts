@@ -19,13 +19,6 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
         this.questStatus = new CORE.QuestStatus(emu);
     }
 
-    get max_hp(): number {
-        return this.emulator.rdramRead16(0x803C4C08);
-    }
-    set max_hp(flag: number) {
-        this.emulator.rdramWrite16(0x803C4C08, flag);
-    }
-
     get current_hp(): number {
         return this.emulator.rdramRead16(0x803C4C0A);
     }

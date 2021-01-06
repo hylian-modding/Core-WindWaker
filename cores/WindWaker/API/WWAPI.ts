@@ -157,7 +157,7 @@ export interface IQuestStatus {
     bracelet: Buffer;
     pirate_charm: Buffer;
     hero_charm: Buffer;
-    piece_of_heart: number;
+    heart_pieces: number;
     owned_charts: Buffer;
     opened_charts: Buffer;
     completed_charts: Buffer;
@@ -177,7 +177,6 @@ export interface ISaveContext {
     inventory: IInventory;
     questStatus: IQuestStatus;
     current_hp: number;
-    max_hp: number;
     current_mp: number;
     max_mp: number;
 }
