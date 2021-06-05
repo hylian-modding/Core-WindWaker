@@ -50,7 +50,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isLoadingZone(): boolean {
-        let r1 = this.emu.rdramRead8(0x81801004);
+        let r1 = this.emu.rdramRead8(0x81803000);
 
         return (r1 === 0x1);
     }

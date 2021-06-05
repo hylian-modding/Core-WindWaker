@@ -37,6 +37,10 @@
   0x86 entries in total.
   10,1: Which figurine room number is this figurine in???
 
+8035CEEC,4 - Link's maximum forward movement speed. (17.0)
+  Seems to be used for both running forward and autojumping forward.
+8035D4B8,4 - Link's minimum forward movement speed when doing an autojump. (9.0)
+
 8035C764 - List of Link's animations?
   Entry length 8.
   Argument r4 to setSingleMoveAnime is an example of an index in this list.
@@ -61,10 +65,21 @@
   05,1: Warp index of the warp above this one.
   06,1: Warp index of the warp below this one.
 
-8035BD34 - List of item IDs given from certain story-important cutscenes.
+8035BD34 - List of item IDs given from certain story-important cutscenes (STB cutscenes).
   master sword, pearls, etc.
   (this is equivalent to offset 358D34 in main.dol)
   this list is read from by 800e7420, execute__10daDemo00
+  All the entries in the list:
+    39 Master Sword (Powerless)
+    3A Master Sword (Half Power)
+    3E Master Sword (Full Power)
+    6A Din's Pearl
+    6B Farore's Pearl
+    69 Nayru's Pearl
+    30 Delivery Bag
+    3B Hero's Shield
+    35 Fire and Ice Arrows
+    FF (No item)
 
 803398D8-8033A647 - Mapping of actor IDs to rel filenames. (DynamicNameTable)
   Entry length 8.
@@ -119,12 +134,12 @@ g_fopAcTg_Queue:
   08,4: Prerequisite item ID you need before you can buy this item.
     -1 for no prerequisite? Or -1 might be an invalid prerequisite?
   0C,1: Bitfield affecting what can prevent you from buying the item.
-    0 - This item has a prerequisite item. This bit must be set for the prerequisite item ID above to do anything.
-    1 - This item has a negative prerequisite item. This bit must be set for the negative prerequisite item ID above to do anything.
-    2 - This item has a maximum number of it you can carry. (Bombs, bait, etc.)
-    3 - This item requires you to own a bottle. Doesn't need to be empty.
-    4 - This item requires an empty bottle.
-    5 - This item costs rupees to buy.
+    & 01 - This item has a prerequisite item. This bit must be set for the prerequisite item ID above to do anything.
+    & 02 - This item has a negative prerequisite item. This bit must be set for the negative prerequisite item ID above to do anything.
+    & 04 - This item has a maximum number of it you can carry. (Bombs, bait, etc.)
+    & 08 - This item requires you to own a bottle. Doesn't need to be empty.
+    & 10 - This item requires an empty bottle.
+    & 20 - This item costs rupees to buy.
   0D,3: Padding.
 80375FBC-80376263 (372FBC in main.dol) - Shop item set data.
   Entry length 0x14.
@@ -135,10 +150,17 @@ g_fopAcTg_Queue:
   10,4: Number of the item given...?
 
 803764DC-803764FF - List of pointers to the shop item positions for each shop.
-  Each pointer points to a list of 9 floats, which are the X,Y,Z positions of each of the 3 items in the shop.
-  However Item_set_pos_data_rshop_0 has 36 floats (probably Zunari's shop).
-  80376398 - Beedle's shop on Outset.
-  80376404 - Beedle's shop on Rock Spire.
+  Each pointer points to a list of X,Y,Z positions of each of the items in the shop.
+  Entries 00-07 each have 3 items, or 9 floats. Entry 08 has 12 items, or 36 floats.
+  00 8037632C Item_set_pos_data_dshop   - ?
+  01 80376350 Item_set_pos_data_bmshop1 - ?
+  02 80376374 Item_set_pos_data_bmshop2 - ?
+  03 80376398 Item_set_pos_data_bshop_3 - Beedle's shop with the Bait Bag (on Outset and probably other islands).
+  04 803763bc Item_set_pos_data_bshop_4 - Beedle's shop with ?
+  05 803763e0 Item_set_pos_data_bshop_5 - Beedle's shop with ?
+  06 80376404 Item_set_pos_data_bshop_6 - Beedle's special shop ship on Rock Spire.
+  07 80376428 Item_set_pos_data_bshop_7 - ?
+  08 8037644c Item_set_pos_data_rshop_0 - Zunari's shop on Windfall.
 
 80377018-8037705F - List of position offsets(???) for carryable weapons (Boko).
   Entry length 0xC.
@@ -154,6 +176,47 @@ g_fopAcTg_Queue:
   0 - 80000007 - Inside FF1
   1 - 80000012 - Meet Tetra
   2 - 80000017 - Fairy Woods
+
+8037ED40-8037EDCF - List of "cam move BG" types. (dCamera_c::mvBGTypes(void))
+  0x24 entries in total.
+  Each entry in this list is a pointer to a string. That string is the name of the camera movement type.
+  These are all the entries:
+    00 80359A60 ????
+    01 80359A65 Field
+    02 80359A6B Dungeon
+    03 80359A73 Plain
+    04 80359A79 DungeonDown
+    05 80359A85 DungeonUp
+    06 80359A8F DungeonCorner
+    07 80359A9D Jump
+    08 80359AA2 DungeonWide
+    09 80359AAE Room
+    0A 80359AB3 FieldCushion
+    0B 80359AC0 OverLook
+    0C 80359AC9 Corridor
+    0D 80359AD2 Subject
+    0E 80359ADA DungeonPassage
+    0F 80359AE9 Cliff
+    10 80359AEF Cliff2
+    11 80359AF6 MajTower
+    12 80359AFF Boss01
+    13 80359B06 Boss02
+    14 80359B0D Gamoss
+    15 80359B14 MiniIsland
+    16 80359B1F Amoss
+    17 80359B25 Cafe
+    18 80359B2A P_Ganon1
+    19 80359B33 P_Ganon2
+    1A 80359B3C WindBoss
+    1B 80359B45 P_Ganon3
+    1C 80359B4E G_BedRoom
+    1D 80359B58 G_Roof
+    1E 80359B5F G_BedRoom2
+    1F 80359B6A Boss04
+    20 80359B71 WindHall
+    21 80359B7A BigBird
+    22 80359B82 DStairs
+    23 00000000 [empty string]
 
 80371618,24 - Data related to the game heap. (GameHeapCheck)
 80371618,4 - Pointer to the string "Game".
@@ -195,7 +258,8 @@ Format of each block of memory in the game heap:
     This is used for when you hover over the item on the pause screen.
     Note that this message ID plus 0xC8/0d200 is the description to be shown when you press A while hovering over it on the pause screen.
   1E,1: ?
-  20,2: ?
+  20,2: Maximum amount of memory that may be needed to instantiate this item's assets, or 0 for no max.
+    Argument r5 to entrySolidHeap.
 803866B0 (3836B0 in main.dol) - List of field item resources. Items that appear freely placed in the world as ACTRs.
   Entry length 0x1C.
   Format:
@@ -220,7 +284,7 @@ Format of each block of memory in the game heap:
     & 01 - This item does not fade out and disappear after a time limit.
     & 02 - Item is permanently deactivated.
       It acts the same as if the item has an activation switch that isn't set yet where it can't be picked up, except it never activates from a switch.
-    & 04 - Set for small and big keys, but seems to never be read by code?
+    & 04 - Set for small keys, big keys, and the telescope, but seems to never be read by code?
     & 10 - Shadow related. Call dComIfGd_setShadow instead of dComIfGd_setSimpleShadow2?
 803886B0 - Item special effect info.
   Entry length 4. Index is an item ID. (Not all items have entries here. It only goes from item 00 to item 80.)
@@ -386,9 +450,12 @@ Format of each block of memory in the game heap:
   000,4: Pointer to 803754A4 (_15dStage_roomDt_c virtual table)
   104,1: Bitfield relating to room loading??
     & 01 - Must be 0 before the room will load in?
+    & 02 - Room is loading.
     & 06 - if nonzero, stop looping over all room controls...?
-    & 08 - Something checked by treasure chests, in daTbox_c::checkRoomDisp(int)
-    & 10 - Something checked by treasure chests, in daTbox_c::checkRoomDisp(int)
+    & 08 - Room is hidden.
+      Checked by treasure chests, in daTbox_c::checkRoomDisp(int)
+    & 10 - ???
+      Checked by treasure chests, in daTbox_c::checkRoomDisp(int)
     If 08 is not set and 10 is set, the room is considered loaded and treasure chests will be considered active, otherwise not?
   107,1: Zone number? Read by getZoneNo func.
     valid zone numbers are 00-1F
@@ -469,7 +536,34 @@ Each inventory slot:
 803C4C57,1 - Hookshot (2F)
 803C4C58,1 - Skull Hammer (33)
 
-803C4C59 - Start of list of bitfields of items you own?
+803C4C59 - Start of list of bitfields of items you own.
+803C4C59,1 - First bitfield of what bottle contents you have ever owned at an point.
+  01 - ?
+  02 - Unused bottle contents item 4F
+  04 - Empty Bottle
+  08 - Red Potion
+  10 - Green Potion
+  20 - Blue Potion
+  40 - Elixir Soup (1/2)
+  80 - Elixir Soup
+803C4C5A,1 - Second bitfield of what bottle contents you have ever owned at an point.
+  01 - ?
+  02 - Bottled Water
+  04 - Fairy in Bottle
+  08 - Forest Firefly
+  10 - Forest Water
+  20 - Unused bottle contents item 5A
+  40 - Unused bottle contents item 5B
+  80 - Unused bottle contents item 5C
+803C4C5B,1 - Third bitfield of what bottle contents you have ever owned at an point.
+  01 - ?
+  02 - Unused bottle contents item 5D
+  04 - Unused bottle contents item 5E
+  08 - Unused bottle contents item 5F
+  10 - Unused bottle contents item 60
+  20 - 
+  40 - 
+  80 - 
 803C4C60,1 - ? related to bottles?
 803C4C61,1 - Bitfield of what picto boxes you own.
   0 - Picto Box
@@ -520,8 +614,9 @@ Each inventory slot:
 803C4CBF,1 - Whether you have the Pirate's Charm or not. Bitfield.
   0 - Pirate's Charm
   1 - Have read the Pirate's Charm description in the pause menu.
-803C4CC0,1 - Whether you have the Hero's Charm or not. Bitfield.
-  0 - Hero's Charm
+803C4CC0,1 - Bitfield relating to the Hero's Charm.
+  0 - Hero's Charm is owned
+  1 - Hero's Charm is currently equipped
 803C4CC5,1 - Bitfield of which songs you've learned.
   0 - Wind's Requiem
   1 - Ballad of Gales
@@ -750,7 +845,7 @@ bits set during vanilla game in order:
 803C5114-803C5137 - Stage ID B stage info (Houses & Misc Places)
 803C5138-803C515B - Stage ID C stage info (Cave Interiors)
 803C515C-803C517F - Stage ID D stage info (More Cave Interiors & Ship Interiors)
-803C5180-803C51A3 - Stage ID E stage info (This stage info's mem bits are used to keep track of Blue ChuChus being dead.)
+803C5180-803C51A3 - Stage ID E stage info (This stage info's mem bit switches are used to keep track of Blue ChuChus being dead.)
 803C51A4-803C51C7 - Stage ID F stage info (Test Maps)
 Stage info format:
   00,04: Bitfield of the stage's treasure chest open flags.
@@ -866,6 +961,8 @@ Player's partner's room restart position? ("restart option")
 803CA8D4,4 - Second bitfield of player statuses (PlayerStatus1).
   00000400 - In ship while it is sailing.
 
+803CA91C,4 - Pointer to the item_table.bin file loaded into memory.
+
 803C4C38,8 - Stage name of the player's "return place" (where you will be placed when you reload your save).
   The 8th byte must be 00.
 803C4C40,1 - Room number of the player's "return place" (where you will be placed when you reload your save).
@@ -926,6 +1023,9 @@ Player's partner's room restart position? ("restart option")
 803CA764,4 - Number of quarter hearts to add to the player's HP this frame.
   This is a float.
   Can be negative to damage the player.
+803CA768,4 - Number of rupees to add to the player's wallet this frame.
+  This is an int.
+  Can be negative to take rupees away.
 
 803CA77C,2 - Number of small keys to gradually add to the player's current number of small keys in this dungeon.
 803CA77E,2 - Number of heart pieces to gradually add to the player's current life meter.
@@ -943,6 +1043,8 @@ Player's partner's room restart position? ("restart option")
 
 803C9810,2 - related to heart meter?
 803CA7CC,2 - related to heart meter?
+
+803CA7D2,1 - Current message mode?
 
 803CA7D5,1 - What is currently shown on the R button icon?
 803CA7D6,1 - What is currently shown on the B button icon.
@@ -983,12 +1085,20 @@ Player's partner's room restart position? ("restart option")
   27 - "Cancel"
   2A - "Zoom 1"
   2D - Glowing pointy A button icon for Makar planting seeds in soil
-  31 - 
+  31 - Glowing pointy A button icon for Pirate's Charm hints
   43 - 
 803CA7D8,1 - ??
 803CA7DB,1 - Item equipped on the X button.
 803CA7DC,1 - Item equipped on the Y button.
 803CA7DD,1 - Item equipped on the Z button.
+
+80360F38 List of A/B button action icons.
+  00,01: The action ID.
+  04,04: Pointer to the filename of the BTI for this button icon.
+    This filename is in one of the following (which archive to look in is hardcoded based on the action ID):
+    files/res/Msg/acticon.arc
+    files/res/Msg/itemicon.arc
+    files/res/Msg/menuicon.arc
 
 Backup inventory data used by recollection bosses in order to restore the player's proper inventory when the boss is dead:
 803CA858-803CA86F - Backup player status.
@@ -1018,8 +1128,8 @@ Backup inventory data used by recollection bosses in order to restore the player
 
 =========== 803E0BC8-803E1DC7: dRes_control_c
 
-803E0BC8-803E14C7 - List of currently loaded resource archives from the res/Object folder.
-803E14C8-803E1DC7 - List of currently loaded resource archives from the res/Stage folder.
+803E0BC8-803E14C7 - List of currently loaded resource archives from the res/Object folder. (mObjectInfo)
+803E14C8-803E1DC7 - List of currently loaded resource archives from the res/Stage folder. (mStageInfo)
   Entry length 0x24.
   00,0E: Name of the RARC loaded in this slot (without the .arc extension).
   0E,02: Number of actors that currently exist that need this arc to still be loaded (ref count).
@@ -1241,3 +1351,5 @@ Entity deletion queue (g_fpcDtTg_Queue):
 803F6A68 - Has a pointer to a table of pointers to "profiles" for each actor type. (g_fpcPf_ProfileList_p)
   The index in the list is the actor ID.
   Profiles located inside a REL not currently loaded in will simply have null pointers in this list until the REL is loaded.
+
+803F9810,4 - Floating point radius of the bomb actor's correction hitbox (size of the wall that prevents actors from walking inside the bomb).

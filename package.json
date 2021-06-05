@@ -1,5 +1,5 @@
 {
-  "name": "WindWaker",
+  "name": "windwaker",
   "version": "1.0.0",
   "description": "Wind Waker Core",
   "main": "index.js",
@@ -17,6 +17,6 @@
     "url": "https://github.com/hylian-modding/Core-WindWaker/issues"
   },
   "homepage": "https://github.com/hylian-modding/Core-WindWaker#readme",
-  "dependencies": {},
-  "devDependencies": {}
+  "devDependencies": {},
+  "dependencies": {}
 }

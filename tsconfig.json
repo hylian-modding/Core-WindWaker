@@ -16,13 +16,11 @@
       "@sound/*": [
         "./build/emulator/*"
       ],
-      "@dolphin/*": [
-        "./build/dolphin/*"
-      ],
-      "@WindWaker/*": [
-        "./src/WindWaker/*"
+      "@windwaker/*": [
+        "./src/windwaker/*"
       ]
-    }
+    },
+    "noImplicitAny": false
   },
   "include": [
     "src/**/*.ts",

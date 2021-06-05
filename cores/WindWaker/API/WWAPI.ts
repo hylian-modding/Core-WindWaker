@@ -1,3 +1,4 @@
+import { Heap } from 'modloader64_api/heap';
 import { ICore } from 'modloader64_api/IModLoaderAPI';
 import { IPacketHeader } from 'modloader64_api/NetworkHandler';
 
@@ -52,7 +53,7 @@ export enum InventoryItem {
     DEKU_LEAF = 0x34,
     TINGLE_TUNER = 0x21,
     PICTO_BOX = 0x23,
-    DELUXE_PICTO_BOX = 26,
+    DELUXE_PICTO_BOX = 0x26,
     IRON_BOOTS = 0x29,
     MAGIC_ARMOR = 0x2A,
     BAIT_BAG = 0x2C,
@@ -154,6 +155,11 @@ export interface IQuestStatus {
     triforce: Buffer;
     pearls: Buffer;
 
+    current_hp: number;
+    max_hp: number;
+    current_mp: number;
+    max_mp: number;
+    
     bracelet: Buffer;
     pirate_charm: Buffer;
     hero_charm: Buffer;
@@ -175,10 +181,6 @@ export interface IGlobalContext {
 export interface ISaveContext {
     inventory: IInventory;
     questStatus: IQuestStatus;
-    current_hp: number;
-    max_hp: number;
-    current_mp: number;
-    max_mp: number;
 }
 
 export interface ILink {
@@ -204,6 +206,7 @@ export enum WWEvents {
 }
 
 export interface IWWCore extends ICore {
+    heap?: Heap;
     global: IGlobalContext;
     link: ILink;
     save: ISaveContext;

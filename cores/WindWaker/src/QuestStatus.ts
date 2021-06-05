@@ -26,6 +26,33 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator = emu;
     }
 
+    get max_hp(): number {
+        return this.emulator.rdramRead16(0x803C4C08);
+    }
+    set max_hp(flag: number) {
+        this.emulator.rdramWrite16(0x803C4C08, flag);
+    }
+    get max_mp(): number {
+        return this.emulator.rdramRead8(0x803C4C1B);
+    }
+    set max_mp(flag: number) {
+        this.emulator.rdramWrite16(0x803C4C1B, flag);
+    }
+    
+    
+    get current_hp(): number {
+        return this.emulator.rdramRead16(0x803C4C0A);
+    }
+    set current_hp(flag: number) {
+        this.emulator.rdramWrite16(0x803C4C0A, flag);
+    }
+
+    get current_mp(): number {
+        return this.emulator.rdramRead8(0x803C4C1C);
+    }
+    set current_mp(flag: number) {
+        this.emulator.rdramWrite8(0x803C4C1C, flag);
+    }
     //Bitfields 
     get hasTunic(): boolean {
         return this.emulator.rdramReadBit8(0x803C5256, 0);
