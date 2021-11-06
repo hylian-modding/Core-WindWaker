@@ -26,6 +26,30 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator = emu;
     }
 
+    jsonFields: string[] = [
+        "hasTunic",
+        "swordLevel",
+        "swordEquip",
+        "shieldLevel",
+        "shieldEquip",
+        "braceletEquip",
+        "songs",
+        "triforce",
+        "pearls",
+        "current_hp",
+        "max_hp",
+        "current_mp",
+        "max_mp",
+        "bracelet",
+        "pirate_charm",
+        "hero_charm",
+        "owned_charts",
+        "opened_charts",
+        "completed_charts",
+        "sectors",
+        "deciphered_triforce",
+    ];
+    
     get max_hp(): number {
         return this.emulator.rdramRead16(0x803C4C08);
     }

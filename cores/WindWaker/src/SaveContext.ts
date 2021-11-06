@@ -12,6 +12,11 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
     inventory: Inventory;
     questStatus: QuestStatus;
 
+    jsonFields: string[] = [
+        "inventory",
+        "questStatus"
+    ];
+
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;

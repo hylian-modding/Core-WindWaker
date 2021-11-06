@@ -40,8 +40,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
         //4e616d65 = Name 
         //return (value1 === 0x7365615F && value2 === 0x54000000) || (value1 === 0x4E616D65 && value2 === 0)
 
-        let r1 = this.emu.rdramRead32(0x803F6B44);
-        return (r1 === 0x00000000);
+        return (this.global.current_scene_name === "sea_T");
     }
 
     isSceneChange(): boolean {
@@ -60,10 +59,11 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
     }
 
     isSceneNameValid(): boolean {
-        return Buffer.from(this.global.current_scene_name).toString('hex') !== "0000000000000000";
+        return this.global.current_scene_name !== "NULL" && !this.isTitleScreen();
     }
 
     isPaused(): boolean {
         return this.emu.rdramRead8(0x803F7097) !== 0x0;
     }
+
 }
