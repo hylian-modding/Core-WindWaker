@@ -2,6 +2,18 @@
 800589AA,2 - Player's HP when starting a new game, in quarters of hearts.
   (This is hardcoded as part of function init__21dSv_player_status_a_cFv)
 
+8022DDBA,2 - X position of the Nintendo logo during bootup.
+8022DDBE,2 - Y position of the Nintendo logo during bootup.
+8022DEEA,2 - X position of the Dolby logo during bootup.
+8022DEEE,2 - Y position of the Dolby logo during bootup.
+  (These four values are hardcoded as part of function phase_2(dScnLogo_c *))
+
+8034F69D,1 - Empty string "".
+
+8034F7D8,4 (34C7D8,4 in main.dol) - Stage name the player starts a new game in ("sea").
+80058BA7,1 (055AE7,1 in main.dol) - Room number the player starts a new game in (0d44, Outset Island).
+80058BAF,1 (055AEF,1 in main.dol) - Spawn ID the player starts the game at (0d206, on Aryll's Lookout).
+
 8034FCC0-8034FD0F Item data. m_data__12daItemBase_c
   00,4 - Field item gravity. (Float)
   08,4 - ? (Float)
@@ -32,23 +44,36 @@
   Or the number can be -1 if no blue fog appears in this room.
   The actual behavior of the blue fog depending on the number 0-4 is hardcoded in the function poison_move.
 
-8035ABE4-8035B54F - List of figurines.
+8035ABE4-8035B54F - List of figurines. (l_CharaData)
   Entry length 0x12.
   0x86 entries in total.
-  10,1: Which figurine room number is this figurine in???
+  00,2: X ???
+  02,2: Y ???
+  04,2: Z ???
+  06,2: X pos? "Geo"
+    stored to the struct dSnap_Obj+0x0C,4 after converting to float and multiplying by something
+  08,2: Z pos? "Geo"
+    stored to the struct dSnap_Obj+0x10,4 after converting to float and multiplying by something
+  0A,2: (this / 1000.0) = ? (for comparison)
+  0C,2: arg r8 to "SetInf"
+    stored to the struct dSnap_Obj+0x1C,2
+  0E,2: ? (for comparison)
+  10,1: "FigRoomId"?
+  11,1: ???
 
 8035CEEC,4 - Link's maximum forward movement speed. (17.0)
   Seems to be used for both running forward and autojumping forward.
 8035D4B8,4 - Link's minimum forward movement speed when doing an autojump. (9.0)
 
-8035C764 - List of Link's animations?
+8035C764 - List of Link's animations. (daPy_lk_c::mAnmDataTable)
   Entry length 8.
   Argument r4 to setSingleMoveAnime is an example of an index in this list.
   00,2: ? "under" or "upper" anim?
   02,2: ? "under" or "upper" anim?
-  04,1: hand model? maybe left or right
-  05,1: hand model? maybe left or right
-  06,2: texture anim?
+  04,1: Left hand model index?
+  05,1: Right hand model index?
+  06,2: Texture animation index.
+    This number is an index in list 8035C36C.
 
 8035C36C-8035C61F - List of Link's texture animations. (daPy_lk_c::mTexAnmIndexTable)
   Entry length 4. 0xAD entries in total.
@@ -319,11 +344,14 @@ Format of each block of memory in the game heap:
     3 - Down
     4 - Left
 
-8039BC30-8039C08F - List of message sounds. (JAIZelBasic::charVoiceTable)
+8039BC30-8039C08F - List of NPC voices/message sounds. (JAIZelBasic::charVoiceTable)
   Entry length 4. 0x118 entries in total.
   The index in this list is the sound value from a sound command in a message.
-  00,2: ?
-  02,2: ?
+  00,2: Unknown 1?
+  02,2: Unknown 2?
+  How NPC voices/message sounds work:
+    Sound ID 481F (JA_SE_CV_COMMON_PEOPLE) is used for all NPC voices/message sounds.
+    The contents of the sound is changed by calling JAISound::setPortData with r4 = 8 and r5 = (unknown_1 << 8 | unknown_2).
   What each sound index in this list is:
       0: N/A. Don't play any sound.
       1: Aryll: "Ah!"
@@ -466,7 +494,7 @@ Format of each block of memory in the game heap:
   e.g. At offset 0xF0 in here is a pointer to dStage_roomDt_c::getFileListInfo, the function that returns a pointer to FILI.
 
 
-=========== 803C4C08: g_dComIfG_gameInfo
+=========== 803C4C08: g_dComIfG_gameInfo (instance of dComIfG_inf_c struct)
 
 
 803C4C08-803C4C1F - Current player status.
@@ -496,6 +524,14 @@ Format of each block of memory in the game heap:
   2 - 5000 Rupee Wallet
 803C4C1B,1 - Max magic meter/MP.
 803C4C1C,1 - Current magic meter/MP.
+
+803C4C2C,4 - Current time in the day. (Float.)
+  Ranges from 0.0 to 360.0.
+
+803C4C38,8 - Stage name of the player's "return place" (where you will be placed when you reload your save).
+  The 8th byte must be 00.
+803C4C40,1 - Room number of the player's "return place" (where you will be placed when you reload your save).
+803C4C41,1 - Spawn ID of the player's "return place" (where you will be placed when you reload your save).
 
 803C4C44-803C4C58 - Inventory. (dSv_player_item_c)
   Controls which items are in which slots on the inventory screen. Each slot is one byte.
@@ -536,46 +572,69 @@ Each inventory slot:
 803C4C57,1 - Hookshot (2F)
 803C4C58,1 - Skull Hammer (33)
 
-803C4C59 - Start of list of bitfields of items you own.
-803C4C59,1 - First bitfield of what bottle contents you have ever owned at an point.
-  01 - ?
-  02 - Unused bottle contents item 4F
-  04 - Empty Bottle
-  08 - Red Potion
-  10 - Green Potion
-  20 - Blue Potion
-  40 - Elixir Soup (1/2)
-  80 - Elixir Soup
-803C4C5A,1 - Second bitfield of what bottle contents you have ever owned at an point.
-  01 - ?
-  02 - Bottled Water
-  04 - Fairy in Bottle
-  08 - Forest Firefly
-  10 - Forest Water
-  20 - Unused bottle contents item 5A
-  40 - Unused bottle contents item 5B
-  80 - Unused bottle contents item 5C
-803C4C5B,1 - Third bitfield of what bottle contents you have ever owned at an point.
-  01 - ?
-  02 - Unused bottle contents item 5D
-  04 - Unused bottle contents item 5E
-  08 - Unused bottle contents item 5F
-  10 - Unused bottle contents item 60
-  20 - 
-  40 - 
-  80 - 
-803C4C60,1 - ? related to bottles?
+803C4C59-803C4C6D - List of bitfields of which items you own.
+803C4C59,1 - Bitfield of whether you own the telescope + what bottle contents you have ever owned at an point.
+  0 - Telescope
+  1 - Unused bottle contents item 4F
+  2 - Empty Bottle
+  3 - Red Potion
+  4 - Green Potion
+  5 - Blue Potion
+  6 - Elixir Soup (1/2)
+  7 - Elixir Soup
+803C4C5A,1 - Bitfield of whether you own the sail + what bottle contents you have ever owned at an point.
+  0 - Boat's Sail
+  1 - Bottled Water
+  2 - Fairy in Bottle
+  3 - Forest Firefly
+  4 - Forest Water
+  5 - Unused bottle contents item 5A
+  6 - Unused bottle contents item 5B
+  7 - Unused bottle contents item 5C
+803C4C5B,1 - Bitfield of whether you own the wind waker + what bottle contents you have ever owned at an point.
+  0 - Wind Waker
+  1 - Unused bottle contents item 5D
+  2 - Unused bottle contents item 5E
+  3 - Unused bottle contents item 5F
+  4 - Unused bottle contents item 60
+  5 - 
+  6 - 
+  7 - 
+803C4C5C,1 - Bitfield of whether you own the grappling hook.
+  0 - Grappling Hook
+803C4C5D,1 - Bitfield of whether you own the spoils bag.
+  0 - Spoils Bag
+803C4C5E,1 - Bitfield of whether you own the boomerang.
+  0 - Boomerang
+803C4C5F,1 - Bitfield of whether you own the deku leaf.
+  0 - Deku Leaf
+803C4C60,1 - Bitfield of whether you own the tingle tuner.
+  0 - Tingle Tuner
 803C4C61,1 - Bitfield of what picto boxes you own.
   0 - Picto Box
   1 - Deluxe Picto Box
+803C4C62,1 - Bitfield of whether you own the iron boots.
+  0 - Iron Boots
+803C4C63,1 - Bitfield of whether you own magic armor.
+  0 - Magic Armor
+803C4C64,1 - Bitfield of whether you own the bait bag.
+  0 - Bait Bag
 803C4C65,1 - Bitfield of which types of arrows you own.
   0 - Regular arrows (Hero's Bow)
   1 - Fire and Ice Arrows
   2 - Light Arrow
-803C4C66,1 - Bitfield of whether you own bombs or not.
+803C4C66,1 - Bitfield of whether you own bombs.
   0 - Bombs
-803C4C6B,1 - Bitfield of which delivery bags you own.
+803C4C67,1 - ?
+803C4C68,1 - ?
+803C4C69,1 - ?
+803C4C6A,1 - ?
+803C4C6B,1 - Bitfield of whether you own the delivery bag.
   0 - Delivery Bag
+803C4C6C,1 - Bitfield of whether you own the hookshot.
+  0 - Hookshot
+803C4C6D,1 - Bitfield of whether you own the skull hammer.
+  0 - Skull Hammer
 
 803C4C6E,2 - Timer for how long you have left before your Forest Water reverts to regular water?
 
@@ -950,43 +1009,62 @@ Player's partner's room restart position? ("restart option")
   Note that spawn on KoRL can freeze the game if KoRL does not exist in the destination stage.
   However, spawn on KoRL is ignored if spawn type is anything other than 5.
 
-803CA778,4 - Current item ID up for bidding at the auction.
-803CA7C0,2 - Message ID for the name of the item currently up for bidding at the auction.
-
-803CA7F8,1 - Song index of the song to display in the message box for the interactive tutorial.
-
-803CA8D0,4 - First bitfield of player statuses (PlayerStatus0).
-  00010000 - Player is riding the ship. (Checked at 80120484)
-  00100000 - Player is swimming.
-803CA8D4,4 - Second bitfield of player statuses (PlayerStatus1).
-  00000400 - In ship while it is sailing.
-
-803CA91C,4 - Pointer to the item_table.bin file loaded into memory.
-
-803C4C38,8 - Stage name of the player's "return place" (where you will be placed when you reload your save).
-  The 8th byte must be 00.
-803C4C40,1 - Room number of the player's "return place" (where you will be placed when you reload your save).
-803C4C41,1 - Spawn ID of the player's "return place" (where you will be placed when you reload your save).
-
-8034F69D,1 - Empty string "".
-
-8034F7D8,4 (34C7D8,4 in main.dol) - Stage name the player starts a new game in ("sea").
-80058BA7,1 (055AE7,1 in main.dol) - Room number the player starts a new game in (0d44, Outset Island).
-80058BAF,1 (055AEF,1 in main.dol) - Spawn ID the player starts the game at (0d206, on Aryll's Lookout).
-
 803C9DA0,4 - Has a pointer to the current stage info from the DZx file (the STAG chunk's only entry).
 
-803C9DF0,2 - Has the event index of the next event about to be started.
+803C9DE0,F4 - Instance of dEvt_control_c
+  00,C0 - List of dEvt_order_c
+    Entry Length 0x18
+    8 entries in total.
+    00,2 - dEvt_EventType 0 Talk, 1/A Door/Treasure, 2 Demo, 3 Compulsory, 4 Potential, 5 Item, 6/7/8 Presenting Items?, B Photo, 9 Catch
+    02,2 - dEvt_OrderFlag
+    04,2 - ? (Referenced in dEvt_control_c::setParam)
+    06,2 - ?
+    08,4 - fopAc_ac_c* for Actor 1
+    0C,4 - fopAc_ac_c* for Actor 2
+    10,2 - mEventId, index of the event for this dEvt_order_c instance
+    12,2 - mPriority
+    14,1 - Next dEvt_order_c index to go to in event sequence?
+    15,1 - mEventInfoIdx
+    16,2 - Padding?
+ C0,1 - 
+ C1,1 - Index of the first dEvt_order_c to use
+ C2,1 - mMode (0, 1, 2, 3?)
+ C3,1 - Flag to end an event?
+ C4,4 - dEvt_control_c::setParam uses these to hold Base Processing Class Ids
+ C8,4 - ^
+ CC,4 - ^ (mPtTalk)
+ D0,4 - ^ (mPtItem)
+ D4,1 - mCurStaffId (Used in dEvt_control_c::giveItemCut())
+ D5,1 - ?
+ D6,2 -
+ D8,2 - mEventId (Used in dEvt_control_c::catchCheck())
+ DA,1 - mEventEndSound (Used in dEvt_control_c::demoCheck())
+ DB,1 -
+ DC,1 -
+ DD,1 - ?
+ DE,1 -
+ DF,1 -
+ E0,1 - X/Y/Z Button pressed when presenting an Item?
+ E1,1 - Item ID of the Button Pressed for E0?
+ E2,1 - mbInPhoto (Used in dEvt_control_c::photoCheck())
+ E3,1 - ?
+ E4,4 - Float for adjusting the Culling Distance?
+ E8,2 - Flags for State during Events
+ EA,4 - ?
+ EE,4 - ?
+ F2,2 - Padding? 
 
 803C9ED4 - Event manager start.
 
 803C9EA0,1 - related to events
 803C9EA1,1 - related to events
-803C9EA2,1 - Some state relating to events. (mCheckState of dEvt_control_c)
-  0 - not in an event
-  1 - in an event, black bars above and below screen, Link cannot move
-  2 - in an event, maybe for opening chests?
+803C9EA2,1 - Some state relating to events. (mMode of dEvt_control_c)
+  0 - Not in an event.
+  1 - in an event, black bars above and below screen, Link cannot move (Talk event?)
+  2 - in an event, maybe for opening chests? (Demo event?)
+  3 - ?? ("Compulsory" event?)
 
+803C9EB0,4 - Unique ID of the item actor for the current cutscene.
 803C9EB4,1 - Item ID to give in an upcoming cutscene.
   The function dProcGetItem__init will usually have the item ID to give specified by a parameter. But if that parameter is 0x100, it will instead read the item ID from this address.
 
@@ -1006,6 +1084,76 @@ Player's partner's room restart position? ("restart option")
 803CA410,4 - Always has a pointer to the player entity in RAM. (for dAttention_c)
   This refers not only to Link, but to Medli/Makar/Tower Servant/seagull when you're controlling them.
 
+803CA57C,4 - Distance between Link and the nearest enemy he can lock on to. (Float.)
+  This will be 10000.0 if there aren't any enemies within lock on range.
+
+===== 803CA5A0
+
+803CA718,4 - Pointer to the camera (instance of camera_class).
+
+803CA778,4 - Current item ID up for bidding at the auction.
+803CA7C0,2 - Message ID for the name of the item currently up for bidding at the auction.
+
+803CA7F8,1 - Song index of the song to display in the message box for the interactive tutorial.
+
+803CA8D0,4 - First bitfield of player statuses (PlayerStatus0).
+  00000001 - 
+  00000002 - 
+  00000004 - 
+  00000008 - 
+  00000010 - 
+  00000020 - 
+  00000040 - 
+  00000080 - 
+  00000100 - 
+  00000200 - 
+  00000400 - 
+  00000800 - 
+  00001000 - Aiming the bow.
+  00002000 - 
+  00004000 - 
+  00008000 - Swinging the sword.
+  00010000 - Player is riding the ship. (Checked at 80120484)
+  00020000 - 
+  00040000 - Shooting the grappling hook or hookshot while in first person.
+  00080000 - Aiming the boomerang.
+  00100000 - Player is swimming.
+  00200000 - Looking through the telescope.
+  00400000 - Waiting for the boomerang to come back.
+  00800000 - 
+  01000000 - 
+  02000000 - 
+  04000000 - 
+  08000000 - Player is crawling.
+  10000000 - 
+  20000000 - 
+  40000000 - Charging a spin attack or hurricane spin, or performing the hurricane spin.
+  80000000 - 
+803CA8D4,4 - Second bitfield of player statuses (PlayerStatus1).
+  00000001 - Conducting the Wind Waker.
+  00000002 - 
+  00000004 - 
+  00000008 - Aiming the Picto Box.
+  00000010 - 
+  00000020 - Flying with the Deku Leaf.
+  00000040 - Blowing air with the Deku Leaf.
+  00000080 - 
+  00000100 - 
+  00000200 - 
+  00000400 - In ship while it is sailing.
+  00000800 - 
+  00001000 - 
+  00002000 - 
+  00004000 - 
+  00008000 - 
+  00010000 - 
+  00020000 - 
+  00040000 - 
+  00080000 - 
+
+803CA90E,1 - The room/island number on the sea stage the player was in when they last entered a submarine or Beedle's Shop Ship.
+  This is used to return the player to the same room they were in before entering.
+
 803CA74C,4 - Always has a pointer to the player entity in RAM. (for dComIfG_play_c)
   This refers not only to Link, but to Medli/Makar/Tower Servant/seagull when you're controlling them.
 803CA754,4 - Always has a pointer to the Link entity in RAM. (for dComIfG_play_c)
@@ -1017,6 +1165,8 @@ Player's partner's room restart position? ("restart option")
   set by line 80072240
 803CA800,1 - Somehow related to place names shown on the screen like above.
   set to 2 by line 80072248
+
+803CA91C,4 - Pointer to the item_table.bin file loaded into memory.
 
 80390960-803909AB - List of pointers to the filepaths of the .bti image files for each place name.
 
@@ -1192,6 +1342,11 @@ Note: See 80352EA0 for details about the layout of blue fog in a given room of E
   First the 9 X positions are listed. Then the 9 Y positions are listed.
   These can't be edited easily. This list in RAM isn't copied directly from main.dol. Instead, the unique float values are around 803FAE58, and there is a function (__ct__9dMf_HIO_cFv) which copies the unique float values to their appropriate positions in the actual list.
 
+803F6268,4 - Boomerang trail color. (RGBA)
+803F62AC,4 - Normal sword slash trail color. (RGBA)
+803F62B0,4 - Elixir soup sword slash trail color. (RGBA)
+803F62B4,4 - Parrying sword slash trail color. (RGBA)
+
 803F660C,4 - Bitfield of what buttons need to be pressed in order to reset the game (X+B+Start).
 
 803F69D4,4 - Bitfield of which actor status bits should not be allowed to update or draw this frame?
@@ -1201,9 +1356,9 @@ Note: See 80352EA0 for details about the layout of blue fog in a given room of E
 
 803F6B44,4 - Pointer to the data for the current loaded salvage point tags. (daSalvage_c::mTagData_p)
   Format of that data:
-  01,001: ??? Number of slots in use maybe?
-  04,380(?): List of salvage points.
-    Entry length 0x38. 0x10 entries in total.
+  01,0001: ??? Number of slots in use maybe?
+  04,2300: List of salvage points.
+    Entry length 0x38. 0xA0 entries in total.
     Note: The code reads from this struct in a slightly strange way, where the 4 bytes from the list header are in the offset for each entry. So if it reads from offset 0x34, that's actually item ID at offset 0x30.
     00,4: X position.
     04,4: Y position.
@@ -1224,6 +1379,8 @@ Note: See 80352EA0 for details about the layout of blue fog in a given room of E
       01 - "Used"
     33,1: "DrawMode" / "Alpha"
     34,1: "DrawMode"
+803F6B4C,4 - The index in daSalvage_c::mTagData_p of the salvage point tag currently being salvaged? (daSalvage_c::mSalvageId)
+  daSalvage_c::checkDistance(void) returns the index of the currently active salvage point tag.
 
 803F6B5D,1 - Total number of Windfall item pedestals in the current stage.
 803F6B5E,1 - Current number of Windfall item pedestals in the current stage that you've placed an item in.

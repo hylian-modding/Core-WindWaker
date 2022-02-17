@@ -173,6 +173,8 @@ export interface IQuestStatus {
 export interface IGlobalContext {
     current_scene_frame: number;
     current_scene_name: string;
+    current_room_number: number;
+    prev_room_number: number;
     next_scene_name: string;
     next_room_number: number;
     linkPointer: number;
@@ -202,6 +204,7 @@ export interface IWWHelper {
 export enum WWEvents {
     ON_SAVE_LOADED = 'onSaveLoaded',
     ON_SCENE_CHANGE = 'onSceneChange',
+    ON_ROOM_CHANGE = 'onRoomChange',
     ON_LOADING_ZONE = 'onLoadingZone',
 }
 

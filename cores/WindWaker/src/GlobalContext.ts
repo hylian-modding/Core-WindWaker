@@ -24,6 +24,13 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
         return realName;
     }
 
+    get current_room_number(): number {
+        return this.emulator.rdramRead8(0x803F6A78);
+    }
+    get prev_room_number(): number {
+        return this.emulator.rdramRead8(0x803F6A79);
+    }
+
     get next_scene_name(): string {
         let rawName = this.emulator.rdramReadBuffer(0x803C9D48, 0x8).toString();
         let realName = "NULL";
@@ -34,7 +41,7 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
     }
 
     get next_room_number(): number {
-        return this.emulator.rdramRead8(0x803C9D52);
+        return this.emulator.rdramRead8(0x803CA90D); //TODO: See if this is valid
     }
     get linkPointer(): number {
         return this.emulator.rdramRead32(0x803CA410);

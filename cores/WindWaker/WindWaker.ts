@@ -26,6 +26,7 @@ export class WindWaker implements ICore, API.IWWCore {
     isSaveLoaded = false;
     touching_loading_zone = false;
     last_known_scene: string = "";
+    last_known_room: number = -1;
     isLinkLoadingZone!: number;
     temp: boolean = false;
 
@@ -74,5 +75,11 @@ export class WindWaker implements ICore, API.IWWCore {
         this.eventTicks.forEach((value: Function, key: string) => {
             value();
         });
+        
+        // Room change check
+        if(this.last_known_room !== this.global.current_room_number){
+            bus.emit(API.WWEvents.ON_ROOM_CHANGE, this.global.current_scene_name, this.global.current_room_number);
+            this.last_known_room = this.global.current_room_number;
+        }
     }
 }
