@@ -151,16 +151,25 @@ export interface IQuestStatus {
     shieldLevel: Buffer;
     shieldEquip: number;
     braceletEquip: number;
-    songs: Buffer;
-    triforce: Buffer;
-    pearls: Buffer;
+    
+    
+    
+    windsRequiem: boolean;
+    balladGales: boolean;
+    commandMelody: boolean;
+    earthLyric: boolean;
+    windAria: boolean;
+    songPassing: boolean;
 
     current_hp: number;
     max_hp: number;
     current_mp: number;
     max_mp: number;
     
-    bracelet: Buffer;
+    bracelet: number;
+    triforce: Buffer;
+    pearls: Buffer;
+    songs: Buffer;
     pirate_charm: Buffer;
     hero_charm: Buffer;
     owned_charts: Buffer;

@@ -20,10 +20,12 @@ export const enum SwordBitMap {
 
 export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     private emulator: IMemory;
-
+    private songFlags: FlagManager;
+    private songFlagsAddr: number = 0x803C4CC5;
     constructor(emu: IMemory) {
         super();
         this.emulator = emu;
+        this.songFlags = new FlagManager(emu, this.songFlagsAddr);
     }
 
     jsonFields: string[] = [
@@ -33,12 +35,15 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         "shieldLevel",
         "shieldEquip",
         "braceletEquip",
-        "songs",
+        "windsRequiem",
+        "balladGales ",
+        "commandMelody",
+        "earthLyric",
+        "windAria",
+        "songPassing",
         "triforce",
         "pearls",
-        "current_hp",
         "max_hp",
-        "current_mp",
         "max_mp",
         "bracelet",
         "pirate_charm",
@@ -48,8 +53,9 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         "completed_charts",
         "sectors",
         "deciphered_triforce",
+        "songs",
     ];
-    
+
     get max_hp(): number {
         return this.emulator.rdramRead16(0x803C4C08);
     }
@@ -62,8 +68,8 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     set max_mp(flag: number) {
         this.emulator.rdramWrite16(0x803C4C1B, flag);
     }
-    
-    
+
+
     get current_hp(): number {
         return this.emulator.rdramRead16(0x803C4C0A);
     }
@@ -77,7 +83,16 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     set current_mp(flag: number) {
         this.emulator.rdramWrite8(0x803C4C1C, flag);
     }
+
     //Bitfields 
+
+    get songs(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4CC5, 0x1);
+    }
+    set songs(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4CC5, flag);
+    }
+
     get hasTunic(): boolean {
         return this.emulator.rdramReadBit8(0x803C5256, 0);
     }
@@ -117,12 +132,12 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator.rdramWrite8(0x803C4C17, flag);
     }
 
-    get bracelet(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CBE, 0x1)
+    get bracelet(): number {
+        return this.emulator.rdramRead8(0x803C4CBE)
     }
 
-    set bracelet(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CBE, flag);
+    set bracelet(flag: number) {
+        this.emulator.rdramWrite8(0x803C4CBE, flag);
     }
 
     get braceletEquip(): number {
@@ -165,11 +180,52 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     5 - Song of Passing
     */
 
-    get songs(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CC5, 0x1);
+    private windsRequiemFlag = new Flag(0x0, 0)
+    get windsRequiem(): boolean {
+        return this.songFlags.isFlagSet(this.windsRequiemFlag)
     }
-    set songs(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CC5, flag);
+    set windsRequiem(bool: boolean) {
+        this.songFlags.setFlag(this.windsRequiemFlag, bool);
+    }
+
+    private balladGalesFlag = new Flag(0x0, 1)
+    get balladGales(): boolean {
+        return this.songFlags.isFlagSet(this.balladGalesFlag)
+    }
+    set balladGales(bool: boolean) {
+        this.songFlags.setFlag(this.balladGalesFlag, bool);
+    }
+
+    private commandMelodyFlag = new Flag(0x0, 2)
+    get commandMelody(): boolean {
+        return this.songFlags.isFlagSet(this.commandMelodyFlag)
+    }
+    set commandMelody(bool: boolean) {
+        this.songFlags.setFlag(this.commandMelodyFlag, bool);
+    }
+
+    private earthLyricFlag = new Flag(0x0, 3)
+    get earthLyric(): boolean {
+        return this.songFlags.isFlagSet(this.earthLyricFlag)
+    }
+    set earthLyric(bool: boolean) {
+        this.songFlags.setFlag(this.earthLyricFlag, bool);
+    }
+
+    private windAriaFlag = new Flag(0x0, 4)
+    get windAria(): boolean {
+        return this.songFlags.isFlagSet(this.windAriaFlag)
+    }
+    set windAria(bool: boolean) {
+        this.songFlags.setFlag(this.windAriaFlag, bool);
+    }
+
+    private songPassingFlag = new Flag(0x0, 5)
+    get songPassing(): boolean {
+        return this.songFlags.isFlagSet(this.songPassingFlag)
+    }
+    set songPassing(bool: boolean) {
+        this.songFlags.setFlag(this.songPassingFlag, bool);
     }
 
     get triforce(): Buffer {
