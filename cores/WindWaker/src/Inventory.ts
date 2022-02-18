@@ -83,9 +83,6 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         "count_spoils",
         "count_delivery",
         "count_bait",
-        "rupeeCap",
-        "bombCap",
-        "arrowCap",
     ];
 
     //Inventory Slots

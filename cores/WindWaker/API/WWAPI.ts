@@ -151,21 +151,10 @@ export interface IQuestStatus {
     shieldLevel: Buffer;
     shieldEquip: number;
     braceletEquip: number;
-    
-    
-    
-    windsRequiem: boolean;
-    balladGales: boolean;
-    commandMelody: boolean;
-    earthLyric: boolean;
-    windAria: boolean;
-    songPassing: boolean;
-
     current_hp: number;
     max_hp: number;
     current_mp: number;
     max_mp: number;
-    
     bracelet: number;
     triforce: Buffer;
     pearls: Buffer;
@@ -177,6 +166,7 @@ export interface IQuestStatus {
     completed_charts: Buffer;
     sectors: Buffer;
     deciphered_triforce: Buffer;
+    tingle_statues: Buffer;
 }
 
 export interface IGlobalContext {

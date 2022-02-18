@@ -35,12 +35,6 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         "shieldLevel",
         "shieldEquip",
         "braceletEquip",
-        "windsRequiem",
-        "balladGales ",
-        "commandMelody",
-        "earthLyric",
-        "windAria",
-        "songPassing",
         "triforce",
         "pearls",
         "max_hp",
@@ -54,6 +48,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         "sectors",
         "deciphered_triforce",
         "songs",
+        "tingle_statues",
     ];
 
     get max_hp(): number {
@@ -280,6 +275,13 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     }
     set deciphered_triforce(flag: Buffer) {
         this.emulator.rdramWriteBuffer(0x803C4D4D, flag);
+    }
+
+    get tingle_statues(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803c5296, 0x1);
+    }
+    set tingle_statues(flag: Buffer){
+        this.emulator.rdramWriteBuffer(0x803c5296, flag);
     }
 
     /*
