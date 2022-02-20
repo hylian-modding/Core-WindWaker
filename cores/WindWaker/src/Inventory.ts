@@ -53,36 +53,8 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         "rupeeCap",
         "bombCap",
         "arrowCap",
-        "FIELD_TELESCOPE",
-        "FIELD_SAIL",
-        "FIELD_WIND_WAKER",
-        "FIELD_GRAPPLING_HOOK",
-        "FIELD_SPOILS_BAG",
-        "FIELD_BOOMERANG",
-        "FIELD_DEKU_LEAF",
-        "FIELD_TINGLE_TUNER",
-        "FIELD_PICTO_BOX",
-        "FIELD_IRON_BOOTS",
-        "FIELD_MAGIC_ARMOR",
-        "FIELD_BAIT_BAG",
-        "FIELD_BOW",
-        "FIELD_BOMBS",
-        "FIELD_BOTTLE1",
-        "FIELD_BOTTLE2",
-        "FIELD_BOTTLE3",
-        "FIELD_BOTTLE4",
-        "FIELD_DELIVERY_BAG",
-        "FIELD_HOOKSHOT",
-        "FIELD_SKULL_HAMMER",
-        "spoils_slots",
-        "bait_slots",
-        "delivery_slots",
-        "owned_delivery",
-        "owned_spoils",
-        "owned_bait",
-        "count_spoils",
-        "count_delivery",
-        "count_bait",
+        "owned_items",
+        "rupeeCount",
     ];
 
     //Inventory Slots
@@ -158,13 +130,14 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         this.setItemInSlot(value, API.InventorySlots.TINGLE_TUNER)
     }
 
-    get FIELD_PICTO_BOX(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.PICTO_BOX)
-        return !(val === API.InventoryItem.NONE);
+    get FIELD_PICTO_BOX(): API.InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.PICTO_BOX);
     }
-    set FIELD_PICTO_BOX(bool: boolean) {
-        let value = bool ? API.InventoryItem.PICTO_BOX : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.PICTO_BOX)
+    set FIELD_PICTO_BOX(item: API.InventoryItem) {
+        if (item === API.InventoryItem.PICTO_BOX ||
+            item === API.InventoryItem.DELUXE_PICTO_BOX) {
+            this.setItemInSlot(item, API.InventorySlots.PICTO_BOX);
+        }
     }
 
     get FIELD_IRON_BOOTS(): boolean {
@@ -194,13 +167,15 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         this.setItemInSlot(value, API.InventorySlots.BAIT_BAG)
     }
 
-    get FIELD_BOW(): boolean {
-        let val = this.getItemInSlot(API.InventorySlots.BOW)
-        return !(val === API.InventoryItem.NONE);
+    get FIELD_BOW(): API.InventoryItem {
+        return this.getItemInSlot(API.InventorySlots.BOW);
     }
-    set FIELD_BOW(bool: boolean) {
-        let value = bool ? API.InventoryItem.BOW : API.InventoryItem.NONE;
-        this.setItemInSlot(value, API.InventorySlots.BOW)
+    set FIELD_BOW(item: API.InventoryItem) {
+        if (item === API.InventoryItem.BOW ||
+            item === API.InventoryItem.FI_BOW ||
+            item === API.InventoryItem.LIGHT_BOW) {
+            this.setItemInSlot(item, API.InventorySlots.BOW);
+        }
     }
 
     get FIELD_BOMBS(): boolean {
@@ -310,8 +285,8 @@ export class Inventory extends JSONTemplate implements API.IInventory {
         return this.emulator.rdramRead16(0x803C4C0C);
     }
     set rupeeCount(flag: number) {
-        this.emulator.rdramWrite16(0x803C4C0C, flag);
         this.emulator.rdramWrite16(0x803CA7CE, flag);
+        this.emulator.rdramWrite16(0x803C4C0C, flag);
     }
 
     //Capacity
@@ -357,7 +332,7 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     set delivery_slots(flag: Buffer) {
         this.emulator.rdramWriteBuffer(this.deliveryBag, flag);
     }
-    
+
     get owned_delivery(): Buffer {
         return this.emulator.rdramReadBuffer(0x803C4C98, 0x4);
     }
@@ -398,6 +373,14 @@ export class Inventory extends JSONTemplate implements API.IInventory {
     }
     set count_bait(flag: Buffer) {
         this.emulator.rdramWriteBuffer(0x803C4CB4, flag);
+    }
+
+    //803C4C59-803C4C6D - List of bitfields of which items you own.
+    get owned_items(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4C59, 0x14);
+    }
+    set owned_items(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4C59, flag);
     }
 
     getItemInSlot(slotId: number): API.InventoryItem {

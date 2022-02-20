@@ -61,7 +61,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         return this.emulator.rdramRead8(0x803C4C1B);
     }
     set max_mp(flag: number) {
-        this.emulator.rdramWrite16(0x803C4C1B, flag);
+        this.emulator.rdramWrite8(0x803C4C1B, flag);
     }
 
 

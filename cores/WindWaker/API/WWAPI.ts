@@ -92,11 +92,11 @@ export interface IInventoryFields {
     FIELD_BOOMERANG: boolean;
     FIELD_DEKU_LEAF: boolean;
     FIELD_TINGLE_TUNER: boolean;
-    FIELD_PICTO_BOX: boolean;
+    FIELD_PICTO_BOX: InventoryItem;
     FIELD_IRON_BOOTS: boolean;
     FIELD_MAGIC_ARMOR: boolean;
     FIELD_BAIT_BAG: boolean;
-    FIELD_BOW: boolean;
+    FIELD_BOW: InventoryItem;
     FIELD_BOMBS: boolean;
     FIELD_BOTTLE1: InventoryItem;
     FIELD_BOTTLE2: InventoryItem;
@@ -114,7 +114,7 @@ export interface IInventoryFields {
     count_spoils: Buffer;
     count_delivery: Buffer;
     count_bait: Buffer;
-
+    owned_items: Buffer;
     rupeeCap: number;
     bombCap: number;
     arrowCap: number;
