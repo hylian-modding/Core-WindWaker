@@ -49,7 +49,7 @@ export class WindWaker implements ICore, API.IWWCore {
     postinit(): void {
         this.global = new GlobalContext(this.ModLoader.emulator);
         this.link = new Link(this.ModLoader.emulator);
-        this.save = new SaveContext(this.ModLoader.emulator);
+        this.save = new SaveContext(this.ModLoader.emulator, this);
         this.helper = new WWHelper(
             this.save,
             this.global,

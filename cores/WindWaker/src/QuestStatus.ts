@@ -6,6 +6,9 @@ import { SaveContext } from './SaveContext';
 import IMemory from "modloader64_api/IMemory";
 import { IModLoaderAPI, ILogger } from "modloader64_api/IModLoaderAPI";
 import { Flag, FlagManager } from "modloader64_api/FlagManager";
+import { ShieldsEquipment } from "./ShieldsEquipment";
+import { SwordsEquipment } from "./SwordsEquipment";
+import { IWWCore } from "../API/Imports";
 
 export const enum ShieldBitMap {
     HEROES = 0,
@@ -22,7 +25,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
     private emulator: IMemory;
     private songFlags: FlagManager;
     private songFlagsAddr: number = 0x803C4CC5;
-    constructor(emu: IMemory) {
+    constructor(emu: IMemory, core: IWWCore) {
         super();
         this.emulator = emu;
         this.songFlags = new FlagManager(emu, this.songFlagsAddr);
@@ -30,9 +33,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
 
     jsonFields: string[] = [
         "hasTunic",
-        "swordLevel",
         "swordEquip",
-        "shieldLevel",
         "shieldEquip",
         "braceletEquip",
         "triforce",
@@ -95,28 +96,12 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator.rdramWriteBit8(0x803C5256, 0, flag);
     }
 
-    get swordLevel(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CBC, 0x1);
-    }
-
-    set swordLevel(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CBC, flag);
-    }
-
     get swordEquip(): number {
         return this.emulator.rdramRead8(0x803C4C16);
     }
 
     set swordEquip(flag: number) {
         this.emulator.rdramWrite8(0x803C4C16, flag);
-    }
-
-    get shieldLevel(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CBD, 0x1);
-    }
-
-    set shieldLevel(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CBD, flag);
     }
 
     get shieldEquip(): number {

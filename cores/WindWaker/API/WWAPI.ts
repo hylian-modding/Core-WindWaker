@@ -4,10 +4,10 @@ import { IPacketHeader } from 'modloader64_api/NetworkHandler';
 
 export const enum Sword {
     NONE = 0,
-    Hero = 0,
-    Master = 1,
-    MasterHalf = 2,
-    MasterFull = 3,
+    Hero = 1,
+    Master = 2,
+    MasterHalf = 3,
+    MasterFull = 4,
 }
 
 export interface ISwords {
@@ -16,8 +16,8 @@ export interface ISwords {
 
 export const enum Shield {
     NONE = 0,
-    HERO = 0,
-    MIRROR = 0,
+    HERO = 1,
+    MIRROR = 2,
 }
 
 export interface IShields {
@@ -146,9 +146,7 @@ export const enum InventorySlots {
 
 export interface IQuestStatus {
     hasTunic: boolean;
-    swordLevel: Buffer;
     swordEquip: number;
-    shieldLevel: Buffer;
     shieldEquip: number;
     braceletEquip: number;
     current_hp: number;
@@ -182,6 +180,8 @@ export interface IGlobalContext {
 export interface ISaveContext {
     inventory: IInventory;
     questStatus: IQuestStatus;
+    shields: IShields;
+    swords: ISwords;
 }
 
 export interface ILink {
