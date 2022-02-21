@@ -143,12 +143,12 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator.rdramWriteBuffer(0x803C4CBF, flag)
     }
 
-    get hero_charm(): Buffer {
-        return this.emulator.rdramReadBuffer(0x803C4CC0, 0x1)
+    get hero_charm(): boolean {
+        return this.emulator.rdramReadBit8(0x803C4CC0, 7);
     }
 
-    set hero_charm(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(0x803C4CC0, flag)
+    set hero_charm(flag: boolean) {
+        this.emulator.rdramWriteBit8(0x803C4CC0, 7, flag)
     }
 
     /*

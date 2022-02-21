@@ -146,6 +146,7 @@ export const enum InventorySlots {
 
 export interface IQuestStatus {
     hasTunic: boolean;
+    hero_charm: boolean;
     swordEquip: number;
     shieldEquip: number;
     braceletEquip: number;
@@ -158,7 +159,6 @@ export interface IQuestStatus {
     pearls: Buffer;
     songs: Buffer;
     pirate_charm: Buffer;
-    hero_charm: Buffer;
     owned_charts: Buffer;
     opened_charts: Buffer;
     completed_charts: Buffer;

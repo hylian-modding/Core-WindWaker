@@ -63,23 +63,23 @@ export class SwordsEquipment extends JSONTemplate implements ISwords {
         this.emulator.rdramWrite8(0x803C4C16, 0x38);
         break;
       case Sword.Master:
-        bits[SwordBitMap.Hero] = 0;
+        bits[SwordBitMap.Hero] = 1;
         bits[SwordBitMap.Master] = 1;
         bits[SwordBitMap.MasterHalf] = 0;
         bits[SwordBitMap.MasterFull] = 0;
         this.emulator.rdramWrite8(0x803C4C16, 0x39);
         break;
       case Sword.MasterHalf:
-        bits[SwordBitMap.Hero] = 0;
-        bits[SwordBitMap.Master] = 0;
+        bits[SwordBitMap.Hero] = 1;
+        bits[SwordBitMap.Master] = 1;
         bits[SwordBitMap.MasterHalf] = 1;
         bits[SwordBitMap.MasterFull] = 0;
         this.emulator.rdramWrite8(0x803C4C16, 0x3A);
         break;
       case Sword.MasterFull:
-        bits[SwordBitMap.Hero] = 0;
-        bits[SwordBitMap.Master] = 0;
-        bits[SwordBitMap.MasterHalf] = 0;
+        bits[SwordBitMap.Hero] = 1;
+        bits[SwordBitMap.Master] = 1;
+        bits[SwordBitMap.MasterHalf] = 1;
         bits[SwordBitMap.MasterFull] = 1;
         this.emulator.rdramWrite8(0x803C4C16, 0x3E);
         break;
