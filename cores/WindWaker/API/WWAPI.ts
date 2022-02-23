@@ -182,6 +182,8 @@ export interface ISaveContext {
     questStatus: IQuestStatus;
     shields: IShields;
     swords: ISwords;
+    eventFlags: Buffer;
+    eventMngrFlags: Buffer;
 }
 
 export interface ILink {
