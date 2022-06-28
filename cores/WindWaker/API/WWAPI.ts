@@ -182,14 +182,20 @@ export interface ISaveContext {
     questStatus: IQuestStatus;
     shields: IShields;
     swords: ISwords;
-    eventFlags: Buffer;
-    eventMngrFlags: Buffer;
+    dSv_event_c_save: Buffer;
+    dSv_event_c: Buffer;
+    dSv_memory_c_save: Buffer;
+    dSv_memory_c: Buffer;
+    dSv_zone_c_actor: Buffer;
+    dSv_zone_c_zoneBit: Buffer;
 }
 
 export interface ILink {
     pos: Buffer;
     rot: Buffer;
     matrixData: Buffer;
+    upperAnimID: number;
+    lowerAnimID: number;
 }
 
 export interface IWWHelper {

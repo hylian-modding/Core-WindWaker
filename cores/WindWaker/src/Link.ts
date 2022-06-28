@@ -5,7 +5,7 @@ import { IModLoaderAPI } from 'modloader64_api/IModLoaderAPI';
 
 export class Link extends JSONTemplate implements API.ILink {
     private emulator: IMemory;
-
+    private linkPtrAddr: number = 0x803CA410;
     private state_addr: number = 0x0;
 
     private pos_addr: number = 0x803E440C; //0x4
@@ -41,5 +41,13 @@ export class Link extends JSONTemplate implements API.ILink {
       let linkPointer = this.emulator.rdramRead32(0x803CA410);
       let modelDataPtr = (linkPointer + 0x328);
       return this.matrixData;
+    }
+
+    get upperAnimID(): number {
+      return this.emulator.rdramReadPtr16(this.linkPtrAddr, 0x2FDC);
+    }
+    
+    get lowerAnimID(): number {
+      return this.emulator.rdramReadPtr16(this.linkPtrAddr, 0x2FEC);
     }
 }
