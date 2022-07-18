@@ -6,8 +6,9 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },
+    "updateUrl": "https://repo.modloader64.com/mods/WWO/core/update/update.json",
+    "devUrl": "https://repo.modloader64.com/mods/WWO/core/dev/update.json",
     "keywords": [],
     "author": "",
-    "license": "ISC",
-    "updateUrl": ""
+    "license": "ISC"
 }
