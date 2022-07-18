@@ -24,8 +24,8 @@ gulp.task('generate_update_file', function(){
         let meta = JSON.parse(fs.readFileSync(`./cores/${name}/package.json`).toString());
         fs.writeFileSync("./dist/update.json", JSON.stringify({
             version: meta.version,
-            url: `https://repo.modloader64.com/mods/${name}/update/${name}.pak`,
-            devUrl: `https://repo.modloader64.com/mods/${name}/dev/${name}.pak`
+            url: `https://repo.modloader64.com/mods/WWO/core/${name}.pak`,
+            devUrl: `https://repo.modloader64.com/mods/WWO/dev/core/${name}.pak`
         }, null, 2));
     } catch (err: any) {
         console.log(err.stack);
