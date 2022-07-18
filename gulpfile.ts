@@ -1,5 +1,5 @@
 import gulp from 'gulp';
-import fs from 'fs-extra';
+import fs from 'fs';
 import child_process from 'child_process';
 
 let name = JSON.parse(fs.readFileSync("./package.json").toString()).name;
