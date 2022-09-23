@@ -168,6 +168,7 @@ export interface IQuestStatus {
 }
 
 export interface IGlobalContext {
+    current_stage_id: number;
     current_scene_frame: number;
     current_scene_name: string;
     current_room_number: number;
@@ -183,7 +184,8 @@ export interface ISaveContext {
     shields: IShields;
     swords: ISwords;
     eventFlags: Buffer;
-    eventMngrFlags: Buffer;
+    regionFlags: Buffer;
+    liveFlags: Buffer;
 }
 
 export interface ILink {

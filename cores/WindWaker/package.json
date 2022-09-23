@@ -1,14 +1,16 @@
 {
-    "name": "WindWaker",
-    "version": "1.0.0",
-    "description": "",
-    "main": "WindWaker.js",
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "updateUrl": "https://repo.modloader64.com/mods/WWO/core/update/update.json",
-    "devUrl": "https://repo.modloader64.com/mods/WWO/dev/core/update.json",
-    "keywords": [],
-    "author": "",
-    "license": "ISC"
+  "name": "WindWaker",
+  "version": "1.0.0-nightly@ee90f27",
+  "description": "",
+  "main": "WindWaker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "updateUrl": "https://repo.modloader64.com/mods/WWO/core/update/update.json",
+  "devUrl": "https://repo.modloader64.com/mods/WWO/dev/core/update.json",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "date": "Fri, 23 Sep 2022 18:48:56 GMT",
+  "commit": "ee90f27"
 }

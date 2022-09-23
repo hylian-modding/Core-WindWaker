@@ -13,7 +13,6 @@ import { ShieldsEquipment } from "./ShieldsEquipment";
 export class SaveContext extends JSONTemplate implements API.ISaveContext {
     private emulator: IMemory;
     private core: IWWCore;
-    private eventMngrAddr = 0x803C9ED4;
     inventory: Inventory;
     questStatus: QuestStatus;
     swords: SwordsEquipment;
@@ -25,7 +24,8 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
         "swords",
         "shields",
         "eventFlags",
-        "eventMngrFlags"
+        "regionFlags",
+        "liveFlags"
     ];
 
     constructor(emu: IMemory, core: IWWCore) {
@@ -46,11 +46,18 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
         this.emulator.rdramWriteBuffer(0x803C522C, flag);
     }
 
-    get eventMngrFlags(): Buffer {
-        return this.emulator.rdramReadBuffer(this.eventMngrAddr + 0x3C, 0x500);
-    }
-    set eventMngrFlags(flag: Buffer) {
-        this.emulator.rdramWriteBuffer(this.eventMngrAddr + 0x3C, flag);
+    get regionFlags(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4F88, 0x240);
     }
 
+    set regionFlags(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C4F88, flag);
+    }
+
+    get liveFlags(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C5380, 0x20);
+    }
+    set liveFlags(flag: Buffer) {
+        this.emulator.rdramWriteBuffer(0x803C5380, flag);
+    }
 }

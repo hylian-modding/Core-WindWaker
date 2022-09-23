@@ -30,8 +30,6 @@ export class WindWaker implements ICore, API.IWWCore {
     isLinkLoadingZone!: number;
     temp: boolean = false;
 
-    @Preinit(
-    )
     preinit() {
         this.eventTicks.set('waitingForSaveload', () => {
             if (!this.isSaveLoaded && this.helper.isSceneNameValid() && !this.helper.isTitleScreen()) {
@@ -41,11 +39,9 @@ export class WindWaker implements ICore, API.IWWCore {
         });
     }
 
-    @Init()
     init(): void {
     }
 
-    @Postinit()
     postinit(): void {
         this.global = new GlobalContext(this.ModLoader.emulator);
         this.link = new Link(this.ModLoader.emulator);
@@ -58,7 +54,6 @@ export class WindWaker implements ICore, API.IWWCore {
         );
     }
 
-    @onTick()
     onTick() {
         if (this.helper.isTitleScreen() || !this.helper.isSceneNameValid()) return;
         if (this.helper.isLoadingZone() && !this.touching_loading_zone) {
