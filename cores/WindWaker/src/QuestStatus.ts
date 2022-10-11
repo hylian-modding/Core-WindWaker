@@ -33,8 +33,6 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
 
     jsonFields: string[] = [
         "hasTunic",
-        "swordEquip",
-        "shieldEquip",
         "braceletEquip",
         "triforce",
         "pearls",
@@ -96,36 +94,13 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
         this.emulator.rdramWriteBit8(0x803C5256, 0, flag);
     }
 
-    get swordEquip(): number {
-        return this.emulator.rdramRead8(0x803C4C16);
-    }
-
-    set swordEquip(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C16, flag);
-    }
-
-    get shieldEquip(): number {
-        return this.emulator.rdramRead8(0x803C4C17);
-    }
-
-    set shieldEquip(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C17, flag);
-    }
-
     get bracelet(): number {
         return this.emulator.rdramRead8(0x803C4CBE)
     }
 
     set bracelet(flag: number) {
         this.emulator.rdramWrite8(0x803C4CBE, flag);
-    }
-
-    get braceletEquip(): number {
-        return this.emulator.rdramRead8(0x803C4C18)
-    }
-
-    set braceletEquip(flag: number) {
-        this.emulator.rdramWrite8(0x803C4C18, flag);
+        this.emulator.rdramWrite8(0x803C4C18, 0x28);
     }
 
     get currentWallet(): number {

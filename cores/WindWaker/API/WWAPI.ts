@@ -147,9 +147,6 @@ export const enum InventorySlots {
 export interface IQuestStatus {
     hasTunic: boolean;
     hero_charm: boolean;
-    swordEquip: number;
-    shieldEquip: number;
-    braceletEquip: number;
     current_hp: number;
     max_hp: number;
     current_mp: number;
