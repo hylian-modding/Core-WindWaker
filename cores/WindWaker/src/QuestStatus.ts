@@ -100,7 +100,7 @@ export class QuestStatus extends JSONTemplate implements API.IQuestStatus {
 
     set bracelet(flag: number) {
         this.emulator.rdramWrite8(0x803C4CBE, flag);
-        this.emulator.rdramWrite8(0x803C4C18, 0x28);
+        if(flag !== 0) this.emulator.rdramWrite8(0x803C4C18, 0x28);
     }
 
     get currentWallet(): number {
