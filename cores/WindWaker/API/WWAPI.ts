@@ -24,6 +24,19 @@ export interface IShields {
     shieldLevel: Shield;
 }
 
+export interface IStageInfo {
+    chests: Buffer;
+    switches: Buffer;
+    items: Buffer;
+    rooms: Buffer;
+    keys: number;
+    map: boolean;
+    compass: boolean;
+    bigKey: boolean;
+    bossKilled: boolean;
+    heartTaken: boolean;
+    bossIntroWatched: boolean;
+}
 export const enum Magic {
     NONE,
     NORMAL,
@@ -173,6 +186,8 @@ export interface IGlobalContext {
     next_scene_name: string;
     next_room_number: number;
     linkPointer: number;
+    getSaveDataForCurrentScene(): Buffer;
+    writeSaveDataForCurrentScene(buf: Buffer): void;
 }
 
 export interface ISaveContext {
@@ -181,8 +196,23 @@ export interface ISaveContext {
     shields: IShields;
     swords: ISwords;
     eventFlags: Buffer;
-    regionFlags: Buffer;
-    liveFlags: Buffer;
+    stage_Live: IStageInfo;
+    stage0_Sea: IStageInfo;
+    stage1_SeaAlt: IStageInfo;
+    stage2_ForsakenFortress: IStageInfo;
+    stage3_DRC: IStageInfo;
+    stage4_FW: IStageInfo;
+    stage5_TOTG: IStageInfo;
+    stage6_ET: IStageInfo;
+    stage7_WT: IStageInfo;
+    stage8_GT: IStageInfo;
+    stage9_Hyrule: IStageInfo;
+    stageA_ShipInt: IStageInfo;
+    stageB_HouseMisc: IStageInfo;
+    stageC_CaveInt: IStageInfo;
+    stageD_CaveShip: IStageInfo;
+    stageE_BlueChu: IStageInfo;
+    stageF_TestMaps: IStageInfo;
 }
 
 export interface ILink {

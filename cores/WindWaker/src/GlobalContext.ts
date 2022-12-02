@@ -205,4 +205,14 @@ export class GlobalContext extends JSONTemplate implements API.IGlobalContext {
         "sea_T",
         "tincle",
     ]
+
+    getSaveDataForCurrentScene(): Buffer {
+        return this.emulator.rdramReadBuffer(0x803C4F88 + this.current_stage_id * 0x24, 0x24);
+    }
+
+    writeSaveDataForCurrentScene(buf: Buffer): void {
+        if (buf.byteLength === 0x24) {
+            this.emulator.rdramWriteBuffer(0x803C4F88 + this.current_stage_id * 0x24, buf);
+        }
+    }
 }
