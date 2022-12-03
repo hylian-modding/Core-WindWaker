@@ -1,6 +1,6 @@
 {
   "name": "WindWaker",
-  "version": "1.0.0-nightly@b59f31d",
+  "version": "1.0.0-nightly@89d53da",
   "description": "",
   "main": "WindWaker.js",
   "scripts": {
@@ -11,6 +11,6 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "date": "Fri, 02 Dec 2022 08:56:30 GMT",
-  "commit": "b59f31d"
+  "date": "Sat, 03 Dec 2022 04:39:52 GMT",
+  "commit": "89d53da"
 }

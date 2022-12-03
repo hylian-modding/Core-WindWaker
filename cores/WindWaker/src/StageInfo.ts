@@ -68,7 +68,6 @@ export class StageInfo extends JSONTemplate implements IStageInfo {
         return this.emulator.rdramRead8(this.stageInfoAddr + (0x24 * this.stageID) + 0x20);
     }
     set keys(flag: number) {
-        console.log((this.stageInfoAddr + (0x24 * this.stageID) + 0x20).toString(16));
         this.emulator.rdramWrite8(this.stageInfoAddr + (0x24 * this.stageID) + 0x20, flag);
     }
 
@@ -77,7 +76,6 @@ export class StageInfo extends JSONTemplate implements IStageInfo {
         return bit;
     }
     set map(flag: boolean) {
-        console.log((this.stageInfoAddr + (0x24 * this.stageID) + 0x21).toString(16))
         this.emulator.rdramWriteBit8(this.stageInfoAddr + (0x24 * this.stageID) + 0x21, 7, flag);
     }
 
@@ -86,7 +84,6 @@ export class StageInfo extends JSONTemplate implements IStageInfo {
         return bit;
     }
     set compass(flag: boolean) {
-        console.log((this.stageInfoAddr + (0x24 * this.stageID) + 0x21).toString(16));
         this.emulator.rdramWriteBit8(this.stageInfoAddr + (0x24 * this.stageID) + 0x21, 6, flag);
     }
 
