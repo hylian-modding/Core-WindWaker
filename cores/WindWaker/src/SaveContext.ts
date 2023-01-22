@@ -71,23 +71,23 @@ export class SaveContext extends JSONTemplate implements API.ISaveContext {
         this.swords = new SwordsEquipment(emu, core);
         this.shields = new ShieldsEquipment(emu, core);
 
-        this.stage_Live = new StageInfo(emu, core, 0x0, 0x803C5380);
-        this.stage0_Sea = new StageInfo(emu, core, 0x0);
-        this.stage1_SeaAlt = new StageInfo(emu, core, 0x1);
-        this.stage2_ForsakenFortress = new StageInfo(emu, core, 0x2);
-        this.stage3_DRC = new StageInfo(emu, core, 0x3);
-        this.stage4_FW = new StageInfo(emu, core, 0x4);
-        this.stage5_TOTG = new StageInfo(emu, core, 0x5);
-        this.stage6_ET = new StageInfo(emu, core, 0x6);
-        this.stage7_WT = new StageInfo(emu, core, 0x7);
-        this.stage8_GT = new StageInfo(emu, core, 0x8);
-        this.stage9_Hyrule = new StageInfo(emu, core, 0x9);
-        this.stageA_ShipInt = new StageInfo(emu, core, 0xA);
-        this.stageB_HouseMisc = new StageInfo(emu, core, 0xB);
-        this.stageC_CaveInt = new StageInfo(emu, core, 0xC);
-        this.stageD_CaveShip = new StageInfo(emu, core, 0xD);
-        this.stageE_BlueChu = new StageInfo(emu, core, 0xE);
-        this.stageF_TestMaps = new StageInfo(emu, core, 0xF);
+        this.stage_Live = new StageInfo(emu, 0x0, 0x803C5380);
+        this.stage0_Sea = new StageInfo(emu, 0x0);
+        this.stage1_SeaAlt = new StageInfo(emu, 0x1);
+        this.stage2_ForsakenFortress = new StageInfo(emu, 0x2);
+        this.stage3_DRC = new StageInfo(emu, 0x3);
+        this.stage4_FW = new StageInfo(emu, 0x4);
+        this.stage5_TOTG = new StageInfo(emu, 0x5);
+        this.stage6_ET = new StageInfo(emu, 0x6);
+        this.stage7_WT = new StageInfo(emu, 0x7);
+        this.stage8_GT = new StageInfo(emu, 0x8);
+        this.stage9_Hyrule = new StageInfo(emu, 0x9);
+        this.stageA_ShipInt = new StageInfo(emu, 0xA);
+        this.stageB_HouseMisc = new StageInfo(emu, 0xB);
+        this.stageC_CaveInt = new StageInfo(emu, 0xC);
+        this.stageD_CaveShip = new StageInfo(emu, 0xD);
+        this.stageE_BlueChu = new StageInfo(emu, 0xE);
+        this.stageF_TestMaps = new StageInfo(emu, 0xF);
     }
 
     get eventFlags(): Buffer {

@@ -8,7 +8,6 @@ import { IStageInfo, IWWCore } from "../API/Imports";
 
 export class StageInfo extends JSONTemplate implements IStageInfo {
     private emulator: IMemory;
-    private core: IWWCore;
     private stageInfoAddr: number = 0x803C4F88;
     private stageID: number;
 
@@ -26,15 +25,15 @@ export class StageInfo extends JSONTemplate implements IStageInfo {
         "bossIntroWatched",
     ];
 
-    constructor(emu: IMemory, core: IWWCore, stageID: number, instance?: number) {
+    constructor(emu: IMemory, stageID: number, instance?: number) {
         super();
         this.emulator = emu;
-        this.core = core;
         this.stageID = stageID;
         if (instance !== undefined) {
             this.stageInfoAddr = instance;
         }
     }
+
 
     get chests(): Buffer {
         return this.emulator.rdramReadBuffer(this.stageInfoAddr + (0x24 * this.stageID), 0x4);
