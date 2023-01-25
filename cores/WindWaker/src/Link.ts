@@ -41,6 +41,6 @@ export class Link extends JSONTemplate implements API.ILink {
       let linkPointer = this.emulator.rdramRead32(0x803CA410);
       let mpCLModel = this.emulator.rdramRead32(linkPointer + 0x32C);
       let mpNodeMtx = this.emulator.rdramRead32(mpCLModel + 0x8C);
-      return this.emulator.rdramReadBuffer(mpNodeMtx, 0x1E90);
+      return this.emulator.rdramReadBuffer(mpNodeMtx, 0x1E60);
     }
 }
