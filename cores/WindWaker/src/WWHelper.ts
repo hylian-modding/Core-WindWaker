@@ -40,7 +40,7 @@ export class WWHelper extends JSONTemplate implements API.IWWHelper {
         //4e616d65 = Name 
         //return (value1 === 0x7365615F && value2 === 0x54000000) || (value1 === 0x4E616D65 && value2 === 0)
 
-        return (this.global.current_scene_name === "sea_T");
+        return (this.global.current_scene_name === "sea_T" || this.global.current_scene_name === "Name");
     }
 
     isSceneChange(): boolean {
